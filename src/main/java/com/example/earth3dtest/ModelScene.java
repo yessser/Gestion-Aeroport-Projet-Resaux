@@ -3,9 +3,12 @@ package com.example.earth3dtest;
 
 import com.interactivemesh.jfx.importer.obj.ObjModelImporter;
 import javafx.animation.AnimationTimer;
+import javafx.animation.RotateTransition;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.concurrent.Task;
 import javafx.geometry.Point3D;
+import javafx.geometry.Pos;
 import javafx.scene.AmbientLight;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
@@ -22,6 +25,8 @@ import javafx.scene.shape.MeshView;
 import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
+import models.Plane;
+import models.Position;
 
 import java.io.IOException;
 import java.net.URL;
@@ -29,6 +34,9 @@ import java.util.Objects;
 
 public class ModelScene  {
 
+    private final Box station;
+    Rotate stationx;
+    Rotate stationy;
     AnimationTimer timer = new AnimationTimer() {
         long last=0;
         final long second=1000000000;
@@ -85,14 +93,38 @@ public class ModelScene  {
             System.out.println(pr);
         });
 
+        this.station = new Box(0.1,0.1,0.1);
+
+        station.getTransforms().addAll(stationx=new Rotate(0, Rotate.X_AXIS),stationy=new Rotate(0, Rotate.Y_AXIS));
+        station.getTransforms().add(new Translate(0,0,-1));
+
+        model.getChildren().add(station);
+
         initMouseControl(root,earthScene);
 
 
         root.getChildren().add(prepareGalaxy());
         earthScene.setRoot(root);
         earthScene.setCamera(camera);
+
     }
 
+
+    public void move(double lat ,double lon){
+        Plane plane = new Plane(1000D,1D,1D,1D,1D,new Position(0D,0D));
+
+        Task<Position> task=plane.moveTo(new Position(lat,lon));
+//      TODO:actual implementation will be different since we will listen to the network calls and not listening to the task
+        task.valueProperty().addListener((v,old,news)->{
+            System.out.println("UPDATE"+ news);
+            stationx.setAngle(news.positionlat.get());
+            stationy.setAngle(news.positionLon.get());
+        });
+      Thread th =new Thread(task);
+      th.setDaemon(true);
+      th.start();
+
+    }
     private void AddStation(Translate t) {
 //        TODO:LOAD STATION MODEL HERE with all the parameters
         Box station = new Box(0.1,0.1,0.1);
