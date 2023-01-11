@@ -31,8 +31,17 @@ public class Position {
     }
     public Double distance(Position newPos) {
 
-//        TODO:change this to the correct distance calc HAVERSINE FORMULA
-        return Math.sqrt(Math.pow(positionlat.get()-newPos.positionlat.get(),2)+Math.pow(positionLon.get()-newPos.positionLon.get(),2));
+        final double R = 6372.8; // Earth's radius In kilometers
+
+        double dLat = Math.toRadians(newPos.positionlat.get() - positionlat.get());
+        double dLon = Math.toRadians(newPos.positionLon.get() - positionLon.get());
+        double lat1 = Math.toRadians(positionlat.get());
+        double lat2 = Math.toRadians(newPos.positionlat.get());
+
+        double a = Math.pow(Math.sin(dLat / 2),2) + Math.pow(Math.sin(dLon / 2),2) * Math.cos(lat1) * Math.cos(lat2);
+        double c = 2 * Math.asin(Math.sqrt(a));
+
+        return R * c;
     }
 
 }
