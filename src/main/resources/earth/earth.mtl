@@ -7,7 +7,7 @@ Ks 0.500000 0.500000 0.500000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd /home/yesser/Downloads/earth/source/Earth_ALB.png
-map_Ns /home/yesser/Downloads/earth/source/Earth_ROUGH.png
-map_Ke /home/yesser/Downloads/earth/source/Earth_EM.png
-map_Bump -bm 1.000000 /home/yesser/Downloads/earth/source/Earth_NORM.png
+map_Kd ./Earth_ALB.png
+map_Ns ./Earth_ROUGH.png
+map_Ke ./Earth_EM.png
+map_Bump -bm 1.000000 ./Earth_NORM.png
