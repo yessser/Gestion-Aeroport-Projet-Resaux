@@ -9,14 +9,17 @@ public class Client {
     private Socket socket;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
-    private String username = "55";
+    private String username;
 
-    public Client(Socket socket, String username) {
+    private Plane airplane;
+
+    public Client(Socket socket, String username, Plane airplane) {
         try {
             this.socket = socket;
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             this.username = username;
+            this.airplane = airplane;
         } catch (IOException var4) {
             this.closeEverything(socket, this.bufferedReader, this.bufferedWriter);
         }
@@ -31,6 +34,13 @@ public class Client {
             Scanner scanner = new Scanner(System.in);
 
             while(this.socket.isConnected()) {
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
                 String messageToSend = scanner.nextLine();
                 this.bufferedWriter.write(this.username + " : " + messageToSend + "\n");
                 this.bufferedWriter.newLine();
@@ -76,10 +86,19 @@ public class Client {
     }
 
     public static void main(String[] args) throws IOException {
+
+
+        //TODO check if the client is already created from flights
+
         String username = "55";
         new Scanner(System.in);
         Socket socket = new Socket("localhost", 3336);
-        Client client = new Client(socket, username);
+        Plane plane = new Plane(255.0, 450.0, 10.0, 10.0, 40.0,new Position(20.0D,45.0D ));
+        Plane plane2 = new Plane(255.0, 450.0, 10.0, 10.0, 40.0,new Position(20.0D,45.0D ));
+
+
+        Client client = new Client(socket, username, plane);
+
         client.listenForMessage();
         client.sendMessage();
     }

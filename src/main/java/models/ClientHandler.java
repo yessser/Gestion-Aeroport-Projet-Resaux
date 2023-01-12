@@ -34,27 +34,29 @@ public class ClientHandler implements Runnable {
     public void broadcastMessage() {
         label23:
         while(true) {
+
             try {
                 if (this.socket.isConnected()) {
                     Scanner scanner = new Scanner(System.in);
                     String msgToSend = scanner.nextLine();
-                    Iterator var3 = clientHandlers.iterator();
+
+                    Iterator clientsList = clientHandlers.iterator();
 
                     while(true) {
-                        if (!var3.hasNext()) {
+                        if (!clientsList.hasNext()) {
                             continue label23;
                         }
 
-                        ClientHandler clientHandler = (ClientHandler)var3.next();
+                        ClientHandler clientHandler = (ClientHandler)clientsList.next();
                         clientHandler.bufferedWriter.write(msgToSend);
                         clientHandler.bufferedWriter.newLine();
                         clientHandler.bufferedWriter.flush();
                     }
                 }
-            } catch (IOException var5) {
+            } catch (IOException e) {
                 this.closeEverything(this.socket, this.bufferedReader, this.bufferedWriter);
-            } catch (Exception var6) {
-                throw new RuntimeException(var6);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
 
             return;

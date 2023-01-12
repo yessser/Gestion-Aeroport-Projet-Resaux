@@ -21,6 +21,8 @@ public class Server {
                     ClientHandler clientHandler = new ClientHandler(socket);
                     Thread thread = new Thread(clientHandler);
                     thread.start();
+
+                    System.out.println(ClientHandler.clientHandlers.size());
                     continue;
                 }
             } catch (IOException var4) {
