@@ -3,9 +3,11 @@ package models;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 
+import java.util.UUID;
+
 public class Plane {
     private static int id = 0;
-    private int idPlane;
+    private UUID idPlane;
     private Double reservoirMax;
     private Double speed;
     private Double rotationSpeed;
@@ -18,8 +20,8 @@ public class Plane {
 
 
     public Plane( Double reservoirMax, Double speed, Double rotationSpeed, Double sizePlane, Double dangerZoneSize,Position position) {
-        this.idPlane = id;
-        id++;
+        this.idPlane = UUID.randomUUID();
+
         this.reservoirMax = reservoirMax;
         this.speed = speed;
         this.rotationSpeed = rotationSpeed;
@@ -57,5 +59,9 @@ public class Plane {
             }
         };
         return task;
+    }
+
+    public UUID getIdPlane() {
+        return idPlane;
     }
 }
