@@ -22,7 +22,7 @@ public class Server {
                     Thread thread = new Thread(clientHandler);
                     thread.start();
 
-                    System.out.println(ClientHandler.clientHandlers.size());
+                   // System.out.println(ClientHandler.clientHandlers.size());
                     continue;
                 }
             } catch (IOException var4) {
@@ -45,7 +45,7 @@ public class Server {
     }
 
     public static void main(String[] args) throws IOException {
-        ServerSocket serverSocket = new ServerSocket(3336);
+        ServerSocket serverSocket = new ServerSocket(3337);
         Server server = new Server(serverSocket);
         server.startServer();
     }
