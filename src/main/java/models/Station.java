@@ -12,11 +12,14 @@ public class Station {
     private Position position;
     private Double maxFuel;
     private Double currentFuel;
-    private HashMap<String,Plane> stationPlanes;
+    private HashMap<UUID,Plane> stationPlanes;
     private int maxNumberOfPlanes;
 
-    public void addPlane(){
-
+    public void addPlane(Plane plane){
+        stationPlanes.put(plane.getIdPlane(),plane);
+    }
+    public void removePlane(UUID planeUUID){
+        stationPlanes.remove(planeUUID);
     }
     public Station(String nameStation, Position position, Double maxFuel,int maxNumberOfPlanes) {
         this.idStation = UUID.randomUUID();
@@ -27,9 +30,8 @@ public class Station {
         stationPlanes= new HashMap<>();
     }
 
-
-    public Station(){
-
+    public HashMap<UUID, Plane> getStationPlanes() {
+        return stationPlanes;
     }
 
     public UUID getIdStation() {

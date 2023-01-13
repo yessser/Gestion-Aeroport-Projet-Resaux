@@ -15,4 +15,22 @@ public class ControlTower {
     public void addPlane (Plane plane){
         allPlanes.put(plane.getIdPlane(),plane);
     }
+    public void checkForCollisions(){
+        ArrayList<Plane> activePlanes = new ArrayList<>();
+//        todo:reminder to maybe check if the plane is actif or not
+        for (Flight f:allFlights.values()){
+                activePlanes.add(f.plane);
+        }
+        for (Plane p1:activePlanes){
+            ArrayList<Plane> dangerPlanes= new ArrayList<>();
+            for (Plane p2 :activePlanes) {
+//                if(p1.getPosition().distance(p2.getPosition()) < p1.getSizePlane()+ p2.getSizePlane())
+                if(p1.getPosition().distance(p2.getPosition()) < p1.getDangerZoneSize()+ p2.getDangerZoneSize())
+                {
+                    dangerPlanes.add(p2);
+                }
+            }
+            p1.setDangerZonePlanes(dangerPlanes);
+        }
+    }
 }

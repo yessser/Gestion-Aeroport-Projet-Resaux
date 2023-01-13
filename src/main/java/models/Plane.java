@@ -2,7 +2,9 @@ package models;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.geometry.Point3D;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class Plane {
@@ -11,9 +13,11 @@ public class Plane {
     private Double reservoirMax;
     private Double speed;
     private Double rotationSpeed;
+    private Double currentRotation;
     private Double sizePlane;
     private Double dangerZoneSize;
 
+    private ArrayList<Plane> dangerZonePlanes;
     private Position position;
     private PlaneState state;
 
@@ -63,5 +67,25 @@ public class Plane {
 
     public UUID getIdPlane() {
         return idPlane;
+    }
+    public Double getSizePlane() {
+        return sizePlane;
+    }
+    public Double getDangerZoneSize() {
+        return dangerZoneSize;
+    }
+    public void setDangerZonePlanes(ArrayList<Plane> dangerZonePlanes) {
+        this.dangerZonePlanes = dangerZonePlanes;
+    }
+    public Position getPosition() {
+        return position;
+    }
+
+    public PlaneState getState() {
+        return state;
+    }
+
+    public void setState(PlaneState state) {
+        this.state = state;
     }
 }

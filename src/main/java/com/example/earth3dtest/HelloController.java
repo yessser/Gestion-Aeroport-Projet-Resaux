@@ -35,7 +35,7 @@ public class HelloController {
     @FXML
     protected void onAddStationButton(){
         modelScene.setNewStationActive(true);
-        modelScene.move(10D,0D);
+//        modelScene.move(10D,0D);
     }
 
 
