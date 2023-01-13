@@ -1,0 +1,10 @@
+.separator {
+-fx-background-color: linear-gradient(to right,  #1b1b1b, #282828,  #eeeeee);
+-fx-background-insets: 0;
+-fx-background-radius: 0;
+-fx-border-color: transparent;
+-fx-border-width: 0;
+-fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.3), 2, 0, 0, 0);
+-fx-height:15px;
+-fx-width: 100%;
+}

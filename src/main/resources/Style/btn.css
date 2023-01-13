@@ -1,0 +1,27 @@
+.button {
+-fx-background-color: linear-gradient(#6A6A6A, #252525);
+-fx-text-fill: #F9F9F9;
+-fx-font-weight: bold;
+-fx-font-size: 14px;
+-fx-padding: 12px 24px;
+-fx-border-radius: 8px;
+-fx-background-radius: 8px;
+-fx-border-color: #BFBFBF;
+-fx-border-width: 2px;
+-fx-background-insets: 0;
+-fx-effect: innershadow(gaussian, rgba(255, 255, 255, 0.3), 5, 0, 0, 0);
+}
+
+.button:hover {
+-fx-background-color: linear-gradient(#7F7F7F, #3E3E3E);
+-fx-cursor: hand;
+}
+
+.button:pressed {
+-fx-background-color: linear-gradient(#5A5A5A, #1C1C1C);
+-fx-scale: 0.95;
+}
+
+.button:selected {
+-fx-border-color: #FFFFFF; /* white border when selected */
+}

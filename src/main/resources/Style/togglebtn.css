@@ -1,0 +1,41 @@
+@font-face {
+    src: url("../fonts/MBFSpace.ttf");
+}
+
+
+.toggle-button {
+-fx-background-color: transparent;
+-fx-text-fill: #eeeeee;
+-fx-border-radius: 10px;
+-fx-background-radius: 10px 10px 0px 0px;
+-fx-border-color: #1b1b1b;
+-fx-font-size: 14px;
+-fx-font-family: "MBF Space";
+-fx-border-width: 2px;
+-fx-background-insets: 0;
+}
+
+.toggle-button:hover {
+-fx-border-color: linear-gradient(to top,  #1b1b1b,  #323232);
+-fx-background-color: linear-gradient(to top,  #1b1b1b,  #323232);
+-fx-text-fill:  #eeeeee;
+-fx-border-radius: 10px 10px 0px 0px;
+-fx-border-color: #323232;
+-fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.3), 10, 0, 0, 0);
+-fx-cursor: hand;
+}
+
+.toggle-button:pressed {
+-fx-background-color: #eeeeee;
+-fx-scale: 0.95;
+}
+
+.toggle-button:selected {
+-fx-border-color: linear-gradient(to top,  #d0d0d0,  #eeeeee);
+-fx-background-color: linear-gradient(to top,  #d0d0d0,  #eeeeee);
+-fx-text-fill:  #1b1b1b;
+-fx-border-radius: 10px 10px 0px 0px;
+-fx-border-color: #eeeeee;
+-fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.3), 2, 0, 0, 0);
+
+}
