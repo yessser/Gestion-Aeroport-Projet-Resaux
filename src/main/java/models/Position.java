@@ -2,7 +2,7 @@ package models;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-
+import javafx.geometry.Point3D;
 public class Position {
 // this may not be needed and might just use Double its like this rn cause i tried  using BIND to the property
     public DoubleProperty positionlat;
@@ -42,6 +42,35 @@ public class Position {
         double c = 2 * Math.asin(Math.sqrt(a));
 
         return R * c;
+    }
+
+    public Double calculateRotation(Position p2){
+//        this function is given a point you wanna turn to
+//        and give you the angle to it in compared to the north pole in radian
+        Position p1 = this;
+        //this is some math magic from this https://www.movable-type.co.uk/scripts/latlong-vectors.html
+        //IMPORTANT NOTE:
+        //each equation translate to a side of the globe in our -z -y x javafx world this is the correct orritentation of stuff
+        Point3D vecPos1 = new Point3D(
+                Math.cos(Math.toRadians(p1.positionlat.get()))*Math.sin(Math.toRadians(p1.positionLon.get())), //our east is on x
+                Math.sin(Math.toRadians(p1.positionlat.get()))*-1,// our north point is on -y
+                Math.cos(Math.toRadians(p1.positionlat.get()))*Math.cos(Math.toRadians(p1.positionLon.get()))*-1//our 0 0 cord is in -z
+        );
+
+        Point3D vecPos2 = new Point3D(
+                Math.cos(Math.toRadians(p2.positionlat.get()))*Math.sin(Math.toRadians(p2.positionLon.get())),
+                Math.sin(Math.toRadians(p2.positionlat.get()))*-1,
+                Math.cos(Math.toRadians(p2.positionlat.get()))*Math.cos(Math.toRadians(p2.positionLon.get()))*-1
+        );
+        Point3D greatCircleAB = vecPos1.crossProduct(vecPos2);
+//        0 -1 0 is the North Pole in our world
+        Point3D greatCircleANorth = vecPos1.crossProduct(new Point3D(0,-1,0));
+        Double sinTheta = greatCircleAB.crossProduct(greatCircleANorth).magnitude() * Math.signum( greatCircleAB.crossProduct(greatCircleANorth).dotProduct(vecPos1)) ;
+        Double cosTheta = greatCircleAB.dotProduct(greatCircleANorth);
+        Double theta= Math.atan2(sinTheta,cosTheta);
+        System.out.println("angle in rad "+theta);
+        System.out.println("angle in degree "+Math.toDegrees(theta));
+        return theta;
     }
 
 }
