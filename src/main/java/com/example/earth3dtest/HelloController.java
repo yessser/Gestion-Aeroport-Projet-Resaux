@@ -15,8 +15,7 @@ import javafx.scene.transform.Rotate;
 import java.net.URL;
 
 public class HelloController {
-    @FXML
-    private Label welcomeText;
+
     @FXML
     private SubScene earthScene;
     private ModelScene modelScene;
@@ -29,7 +28,7 @@ public class HelloController {
 
     @FXML
     protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+
         modelScene.startAnimation();
     }
     @FXML
