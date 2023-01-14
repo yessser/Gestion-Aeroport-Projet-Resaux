@@ -29,7 +29,9 @@ public class Station {
         this.maxNumberOfPlanes = maxNumberOfPlanes;
         stationPlanes= new HashMap<>();
     }
-
+    public Position getPosition() {
+        return position;
+    }
     public HashMap<UUID, Plane> getStationPlanes() {
         return stationPlanes;
     }
