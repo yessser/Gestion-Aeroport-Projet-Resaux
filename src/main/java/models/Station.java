@@ -39,4 +39,8 @@ public class Station {
     public UUID getIdStation() {
         return idStation;
     }
+
+    public String getNameStation() {
+        return nameStation;
+    }
 }

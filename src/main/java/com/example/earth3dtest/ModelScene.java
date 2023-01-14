@@ -36,6 +36,7 @@ import java.util.Objects;
 
 public class ModelScene  {
 
+
     Rotate stationx;
     Rotate stationy;
     HashMap<Station,Group> stationToModel=new HashMap<>();
@@ -79,7 +80,7 @@ public class ModelScene  {
         PerspectiveCamera camera = PrepareCamera();
 
         //model setup
-        
+
         model.setRotationAxis(Rotate.Y_AXIS);
 
         //onClick event setup
@@ -103,6 +104,11 @@ public class ModelScene  {
         earthScene.setRoot(root);
         earthScene.setCamera(camera);
 
+
+
+    }
+
+    public void startPlanes(){
         Plane p1 = new Plane(1000D,100D/6372.8,Math.toRadians(30D),20D,400D,new Position(90D,180D));
         Plane p2 = new Plane(1000D,100D/6372.8,Math.toRadians(30D),20D,400D,new Position(10D,10D));
         spawnPlane(p1);
@@ -130,7 +136,6 @@ public class ModelScene  {
         Thread th2 =new Thread(t2);
         th2.setDaemon(true);
         th2.start();
-
     }
 
     private void spawnPlane(Plane p){
@@ -139,7 +144,7 @@ public class ModelScene  {
         Rotate lat;
         Rotate lon;
         plane.getTransforms().addAll(lat=new Rotate(p.getPosition().positionlat.get(), Rotate.X_AXIS),
-                                     lon=new Rotate(p.getPosition().positionLon.get(), Rotate.Y_AXIS));
+                lon=new Rotate(p.getPosition().positionLon.get(), Rotate.Y_AXIS));
         plane.getTransforms().add(new Translate(0,0,-1.001));
         plane.getTransforms().add(new Rotate(180,Rotate.X_AXIS));
         plane.getTransforms().add(new Rotate(0,Rotate.Y_AXIS));
@@ -151,13 +156,14 @@ public class ModelScene  {
         model.getChildren().remove(planeToModel.get(p));
         planeToModel.remove(p);
     }
-    private void spawnStation(Station s) {
+    public void spawnStation(Station s) {
 //        TODO:LOAD STATION MODEL HERE with all the parameters
         Group station = loadModel(getClass().getResource("/station/station.obj"));
         stationToModel.put(s,station);
 //        TODO fix translation to lat and lon
 //        Double lat = -1*Math.atan2(t.getY()*-1,Math.sqrt(Math.pow(t.getZ()*-1,2)+Math.pow(t.getX(),2)));
 //        Double lon = -1*Math.atan2(t.getX(),t.getZ()*-1);
+        // station.getTransforms().addAll(new Rotate(Math.toDegrees(s.getPosition().positionlat.get()), Rotate.X_AXIS),new Rotate(s.getPosition().positionLon.get(), Rotate.Y_AXIS));
         station.getTransforms().addAll(new Rotate(Math.toDegrees(s.getPosition().positionlat.get()), Rotate.X_AXIS),new Rotate(s.getPosition().positionLon.get(), Rotate.Y_AXIS));
         station.getTransforms().add(new Translate(0,0,-1.001));
         model.getChildren().add(station);
@@ -166,7 +172,7 @@ public class ModelScene  {
         model.getChildren().remove(stationToModel.get(s));
         stationToModel.remove(s);
     }
-//    camera setup
+    //    camera setup
     private static PerspectiveCamera PrepareCamera() {
         PerspectiveCamera camera = new PerspectiveCamera(true);
         camera.setFarClip(10000);
@@ -181,7 +187,7 @@ public class ModelScene  {
     public  void stopAnimation(){
         timer.stop();
     }
-//    mouse control variables TODO? put it in a different class maybe
+    //    mouse control variables TODO? put it in a different class maybe
     private double anchorX, anchorY;
     private double anchorAngleX = 0;
     private double anchorAngleY = 0;
