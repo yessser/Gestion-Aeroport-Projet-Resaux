@@ -1,26 +1,19 @@
 package com.example.earth3dtest;
 
-import com.interactivemesh.jfx.importer.obj.ObjModelImporter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
-import javafx.scene.PerspectiveCamera;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.shape.MeshView;
-import javafx.scene.shape.Sphere;
-import javafx.scene.transform.Rotate;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import models.Flight;
 import models.Plane;
-import models.PlaneData;
 import models.Position;
 import models.Station;
 
@@ -31,34 +24,40 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class HelloController {
+public class HelloController implements Initializable{
 
     public TableView<PlaneData> tableView;
+    public TableView<FlightData> tableFlights;
+    public TableView<com.example.earth3dtest.StationDat> tableStations;
     public TableColumn<PlaneData,String> PlaneId;
     public TableColumn<PlaneData,Double> Lat;
     public TableColumn<PlaneData,Double> Lon;
     ObservableList<PlaneData> planeData = FXCollections.observableArrayList();
+    public TableColumn<StationDat,String> StationName;
+    public TableColumn<StationDat,Double> StationLat;
+    public TableColumn<StationDat,Double> StationLon;
+    ObservableList<StationDat> StationDat = FXCollections.observableArrayList();
+    public TableColumn<FlightData,String> FlightId;
+    public TableColumn<FlightData,String> StartStation;
+    public TableColumn<FlightData,String> DestinationStation;
+    ObservableList<FlightData> FlightData = FXCollections.observableArrayList();
 
     @FXML
     private SubScene earthScene;
     private ModelScene modelScene;
     private boolean started = false;
     public ArrayList<Plane> planes = new ArrayList<>();
+    public ArrayList<Station> Stations = new ArrayList<>();
+    public ArrayList<Flight> flights = new ArrayList<>();
     private ArrayList<Station> stations;
     Plane p1 = new Plane(1000D,100D/6372.8,Math.toRadians(30D),20D,400D,new Position(90D,180D));
     Plane p2 = new Plane(1000D,100D/6372.8,Math.toRadians(30D),20D,400D,new Position(10D,10D));
     Station station1 = new Station("France",new Position(90D,180D),18000D,5);
-
-
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-    }
-
-    @FXML
-    void initialize(){
-        /*
         planes.add(p1);
         planes.add(p2);
+        Stations.add(station1);
 
         PlaneId.setCellValueFactory(new PropertyValueFactory<>("PlaneId"));
         Lat.setCellValueFactory(new PropertyValueFactory<>("Lat"));
@@ -81,23 +80,61 @@ public class HelloController {
             }
             planeData.add(new PlaneData(pl.getIdPlane().toString(),positionlat,positionLon));
         }
+        tableView.setItems(planeData);
 
-        tableView.setItems(planeData);*/
+
+        StationName.setCellValueFactory(new PropertyValueFactory<>("StationName"));
+        StationLat.setCellValueFactory(new PropertyValueFactory<>("StationLat"));
+        StationLon.setCellValueFactory(new PropertyValueFactory<>("StationLon"));
+        for (Station st:Stations){
+            int i=0;
+            Double positionlat=0D,positionLon=0D;
+            String regex="([0-9]+[.][0-9]+)";
+            String input= st.getPosition().toString();
+
+            Pattern pattern=Pattern.compile(regex);
+            Matcher matcher=pattern.matcher(input);
+
+            while(matcher.find()) {
+                if (i==0)
+                    positionlat = Double.parseDouble(matcher.group(1));
+                else
+                    positionLon = Double.parseDouble(matcher.group(1));
+                i++;
+            }
+            StationDat.add(new StationDat(st.getNameStation(),positionlat,positionLon));
+        }
+        tableStations.setItems(StationDat);
+
+        FlightId.setCellValueFactory(new PropertyValueFactory<>("FlightId"));
+        StartStation.setCellValueFactory(new PropertyValueFactory<>("StartStation"));
+        DestinationStation.setCellValueFactory(new PropertyValueFactory<>("DestinationStation"));
+        for (Flight fl:flights){
+
+            FlightData.add(new FlightData(fl.getIdFlight().toString(),fl.startStation().getNameStation(),fl.destinationStation().getNameStation()));
+        }
+        tableFlights.setItems(FlightData);
+
         InitSubScene();
+
+    }
+
+    @FXML
+    void initialize(){
 
     }
 
 
     @FXML
     protected void onHelloButtonClick() {
-        if(!started){
-            modelScene.startAnimation();
-            started = true;
-        }
-        else {
-            modelScene.stopAnimation();
-            started = false;
-        }
+      if(!started){
+        modelScene.startAnimation();
+        started = true;
+      }
+      else {
+          modelScene.stopAnimation();
+          started = false;
+      }
     }
     @FXML
     //when add station button is clicked
@@ -123,11 +160,27 @@ public class HelloController {
 
 
     public void SelectedOption(){
-        //modelScene.spawnStation(station1);
+
+        tableView.setVisible(false);
+        tableFlights.setVisible(true);
+        tableStations.setVisible(false);
+
+       // modelScene.startPlanes();
+
+    }
+
+    public void SelectedOptionStations(){
 
 
-        modelScene.startPlanes();
+        tableView.setVisible(false);
+        tableFlights.setVisible(false);
+        tableStations.setVisible(true);
 
+    }
+    public void SelectedOptionPlanes(){
+        tableView.setVisible(true);
+        tableFlights.setVisible(false);
+        tableStations.setVisible(false);
     }
 
 
