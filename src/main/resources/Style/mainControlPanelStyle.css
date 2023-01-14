@@ -1,0 +1,51 @@
+@font-face {
+    src: url("../fonts/MBFSpace.ttf");
+}
+
+
+.addbtn {
+-fx-background-color: #eeeeee;
+-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 4,0,0,1 );
+-fx-font-family: "MBF Space";
+-fx-font-size: 14px;
+-fx-font-weight: bold;
+-fx-background-radius: 20px;
+-fx-padding: 12px 20px;
+}
+
+.addbtn:hover {
+    -fx-background-color: white;
+    -fx-effect: dropshadow( gaussian , #eeeeee, 10,0,0,1 );
+}
+
+.addbtn:pressed {
+-fx-background-color: #758F8F;
+}
+
+.listPane {
+-fx-border-color: transparent;
+-fx-background-color: transparent;
+}
+
+.TopGContainer {
+-fx-border-color: linear-gradient(to left,  #1b1b1b,  #eeeeee);
+-fx-border-width: 0 0 3 0;
+-fx-border-radius: 0 0 3 0;
+}
+
+
+#trash {
+-fx-background-color: #eeeeee;
+-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 4,0,0,1 );
+-fx-background-radius: 30px;
+-fx-padding: 8px 10px;
+}
+
+#trash:hover {
+    -fx-background-color: white;
+    -fx-effect: dropshadow( gaussian , #eeeeee, 10,0,0,1 );
+}
+
+#trash:pressed {
+-fx-background-color: #758F8F;
+}

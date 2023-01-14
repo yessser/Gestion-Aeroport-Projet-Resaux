@@ -99,7 +99,7 @@ public class ModelScene  {
         initMouseControl(root,earthScene);
 
 
-        root.getChildren().add(prepareGalaxy());
+        //root.getChildren().add(prepareGalaxy());
         earthScene.setRoot(root);
         earthScene.setCamera(camera);
 

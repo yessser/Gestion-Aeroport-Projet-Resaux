@@ -26,11 +26,11 @@ public class Client {
 
     }
 
-    public void sendMessage() {
+    public void sendMessage(Position pos) {
         try {
-            this.bufferedWriter.write(this.username);
+           /* this.bufferedWriter.write(this.username);
             this.bufferedWriter.newLine();
-            this.bufferedWriter.flush();
+            this.bufferedWriter.flush();*/
             Scanner scanner = new Scanner(System.in);
 
             while(this.socket.isConnected()) {
@@ -42,7 +42,7 @@ public class Client {
                 }
 
                 String messageToSend = scanner.nextLine();
-                this.bufferedWriter.write(this.username + " : " + messageToSend + "\n");
+                this.bufferedWriter.write(this.username + " : " + pos.toString());
                 this.bufferedWriter.newLine();
                 this.bufferedWriter.flush();
             }
@@ -56,8 +56,9 @@ public class Client {
         (new Thread(() -> {
             while(Client.this.socket.isConnected()) {
                 try {
-                    String msgFromGroupChat = Client.this.bufferedReader.readLine();
-                    System.out.println(msgFromGroupChat);
+                    String msgFromTower = Client.this.bufferedReader.readLine();
+                    System.out.println(msgFromTower);
+                  //  System.out.println(airplane.getPosition().toString());
                 } catch (IOException var3) {
                     Client.this.closeEverything(Client.this.socket, Client.this.bufferedReader, Client.this.bufferedWriter);
                 }
@@ -89,17 +90,16 @@ public class Client {
 
 
         //TODO check if the client is already created from flights
-
-        String username = "55";
-        new Scanner(System.in);
-        Socket socket = new Socket("localhost", 3336);
         Plane plane = new Plane(255.0, 450.0, 10.0, 10.0, 40.0,new Position(20.0D,45.0D ));
-        Plane plane2 = new Plane(255.0, 450.0, 10.0, 10.0, 40.0,new Position(20.0D,45.0D ));
+
+        String username = plane.getIdPlane().toString();
+        new Scanner(System.in);
+        Socket socket = new Socket("localhost", 3337);
 
 
         Client client = new Client(socket, username, plane);
 
         client.listenForMessage();
-        client.sendMessage();
+        client.sendMessage(plane.getPosition());
     }
 }

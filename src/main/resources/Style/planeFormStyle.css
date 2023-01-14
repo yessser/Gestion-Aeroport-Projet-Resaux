@@ -1,0 +1,98 @@
+@font-face {
+    src: url("../fonts/MBFSpace.ttf");
+}
+
+
+.textGeneral {
+-fx-font-family: "MBF Space";
+
+}
+
+#headT {
+-fx-fill: #eeeeee;
+-fx-font-size: 24px;
+}
+
+.text-labels {
+-fx-fill: #535362;
+-fx-font-size: 18px;
+}
+
+
+.text-field {
+-fx-background-color: transparent;
+-fx-padding: 10px;
+-fx-text-fill: #eeeeee;
+-fx-border-color: linear-gradient(to left,  #1b1b1b, #282828,  #eeeeee);
+-fx-border-width: 0 0 2 0;
+-fx-border-radius: 0 0 2 0;
+
+}
+
+
+.text-field:focused {
+-fx-border-color: #eeeeee;
+-fx-border-width: 0 0 2 0;
+-fx-border-radius: 0 0 2 0;
+-fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.3), 2, 0, 0, 0);
+}
+
+.button-add {
+-fx-background-color: #eeeeee;
+-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 4,0,0,1 );
+-fx-font-family: "MBF Space";
+-fx-font-size: 14px;
+-fx-font-weight: bold;
+-fx-background-radius: 20px;
+-fx-padding: 12px 20px;
+}
+
+.button-add:hover {
+    -fx-background-color: #eeeeee;
+    -fx-effect: dropshadow( gaussian , #eeeeee, 10,0,0,1 );
+}
+
+.button-add:pressed {
+-fx-background-color: #758F8F;
+}
+
+#planeB {
+-fx-background-color: transparent;
+-fx-border-color: linear-gradient(to left,  #1b1b1b, #282828,  #eeeeee);
+-fx-border-width: 0 0 2 0;
+-fx-border-radius: 0 0 2 0;
+}
+
+#planeB:hover {
+   -fx-border-color: #eeeeee;
+   -fx-border-width: 2 ;
+   -fx-border-radius: 2 ;
+   -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.3), 2, 0, 0, 0);
+}
+
+
+#btnStation {
+-fx-background-color: #eeeeee;
+-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 4,0,0,1 );
+-fx-background-radius: 35px;
+-fx-padding: 4px 8px;
+}
+
+#btnStation:hover {
+-fx-background-color:  #eeeeee;
+-fx-effect: dropshadow( gaussian , #eeeeee, 10,0,0,1 );
+}
+
+#btnStation:pressed {
+-fx-background-color: #758F8F;
+}
+
+.textPath {
+-fx-fill: #EEEEEE;
+-fx-font-size: 16px;
+}
+
+.listPane {
+-fx-border-color: transparent;
+-fx-background-color: transparent;
+}
