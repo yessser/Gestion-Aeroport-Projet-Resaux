@@ -1,55 +1,105 @@
 package models;
 
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.rmi.*;
+import java.rmi.server.*;
+import java.util.*;
+import java.util.concurrent.*;
 
-public class Server {
+public class Server extends UnicastRemoteObject implements ServerInterface {
+    private ExecutorService threadPool;
+    private Map<Plane, Thread> threadMap;
+    private Object lock;
 
-    private ServerSocket serverSocket;
-
-    public Server(ServerSocket serverSocket) {
-        this.serverSocket = serverSocket;
+    public Server() throws RemoteException {
+        super();
+        threadPool = Executors.newCachedThreadPool();
+        threadMap = new HashMap<>();
+        lock = new Object();
     }
 
-    public void startServer() {
-        while(true) {
-            try {
-                if (!this.serverSocket.isClosed()) {
-                    Socket socket = this.serverSocket.accept();
-                    System.out.println("A new Client connected");
-                    ClientHandler clientHandler = new ClientHandler(socket);
-                    System.out.println(ClientHandler.clientHandlers.values());
-                            Thread thread = new Thread(clientHandler);
-//                    thread.start();
-                   // System.out.println(ClientHandler.clientHandlers.size());
-                    continue;
-                }
-            } catch (IOException var4) {
-                System.out.println("Connection ERROR");
+    public Plane getObject() throws RemoteException {
+        // Create the object to be sent
+        //Plane obj = new Plane("hello", 123);
+        return null;
+    }
+
+
+    public void bindClientPlane(Plane obj) throws RemoteException {
+        threadPool.execute(() -> {
+            //Handle the received object in a separate thread
+            Thread currentThread = Thread.currentThread();
+            threadMap.put(obj, currentThread);
+            System.out.println("Received object: " + obj);
+        });
+    }
+
+
+    public void startFlight() throws RemoteException {
+            synchronized (lock) {
+                lock.notify();
             }
-
-            return;
-        }
-    }
-    public void startFlight(Flight f){
-        ClientHandler cli= ClientHandler.clientHandlers.get(f.plane);
     }
 
-    public void closeServerSocket() {
+    public Flight getFlight() throws RemoteException {
+        //TODO add FLight info from GUI here
+
+        // test only delete later
+        Position pos = new Position(45.0,44.0);
+        Plane objToSend = new Plane(55.0, 456.0, 55.0, 55.0, 45.0,pos);
+        ArrayList<Station> lst = new ArrayList<>();
+        lst.add(new Station("ff",pos,1.0,5));
         try {
-            if (this.serverSocket != null) {
-                this.serverSocket.close();
-            }
-        } catch (IOException var2) {
-            var2.printStackTrace();
+
+            return new Flight(objToSend,lst);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
+        // ************
 
     }
 
-    public static void main(String[] args) throws IOException {
-        ServerSocket serverSocket = new ServerSocket(3337);
-        Server server = new Server(serverSocket);
-        server.startServer();
+    @Override
+    public void sendPosition(Position position) throws RemoteException {
+        //TODO add rotation and location for plane GUI
+        System.out.println(position.positionLon + position.positionLon);
+    }
+
+    public void waitForFlight() throws RemoteException {
+
+        synchronized (lock) {
+            try {
+                lock.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public Map<Plane, Thread> getThreadMap() throws RemoteException{
+        return threadMap;
+    }
+
+    public static void main(String[] args) {
+        try {
+            // Create and export the server object
+            Server server = new Server();
+            Naming.rebind("rmi://localhost:1099/MyServer", server);
+
+            System.out.println("Server ready.");
+
+            // testing ***
+            Thread.sleep(5000);
+
+            System.out.println(server.getThreadMap().values());
+
+            Thread.sleep(5000);
+
+            // wake client
+            server.startFlight();
+
+            // *******
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
