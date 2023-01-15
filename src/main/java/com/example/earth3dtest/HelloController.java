@@ -37,6 +37,8 @@ public class HelloController implements Initializable{
     public TableColumn<StationDat,Double> StationLat;
     public TableColumn<StationDat,Double> StationLon;
     ObservableList<StationDat> StationDat = FXCollections.observableArrayList();
+
+    @FXML
     public TableColumn<FlightData,String> FlightId;
     public TableColumn<FlightData,String> StartStation;
     public TableColumn<FlightData,String> DestinationStation;
@@ -55,9 +57,11 @@ public class HelloController implements Initializable{
     Station station1 = new Station("France",new Position(90D,180D),18000D,5);
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        /*
         planes.add(p1);
         planes.add(p2);
         Stations.add(station1);
+        System.out.println(p1.getIdPlane());
 
         PlaneId.setCellValueFactory(new PropertyValueFactory<>("PlaneId"));
         Lat.setCellValueFactory(new PropertyValueFactory<>("Lat"));
@@ -114,7 +118,7 @@ public class HelloController implements Initializable{
             FlightData.add(new FlightData(fl.getIdFlight().toString(),fl.startStation().getNameStation(),fl.destinationStation().getNameStation()));
         }
         tableFlights.setItems(FlightData);
-
+*/
         InitSubScene();
 
     }
