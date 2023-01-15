@@ -3,23 +3,19 @@ package com.example.earth3dtest;
 
 import com.interactivemesh.jfx.importer.obj.ObjModelImporter;
 import javafx.animation.AnimationTimer;
-import javafx.animation.RotateTransition;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.concurrent.Task;
 import javafx.geometry.Point3D;
-import javafx.geometry.Pos;
 import javafx.scene.AmbientLight;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.SubScene;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.PickResult;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
-import javafx.scene.shape.Box;
 import javafx.scene.shape.CullFace;
 import javafx.scene.shape.MeshView;
 import javafx.scene.shape.Sphere;
@@ -29,7 +25,6 @@ import models.Plane;
 import models.Position;
 import models.Station;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Objects;
@@ -121,7 +116,7 @@ public class ModelScene  {
 //        p1.addDangerZonePlane(p4);
 //        p2.addDangerZonePlane(p1);
 //        to link flight and the plane
-        Task<Position> t1 = p1.moveTo(new Position(0D,10D));
+        /*Task<Position> t1 = p1.moveTo(new Position(0D,10D), );
         t1.valueProperty().addListener((v,oldval,newval)->{
             planeToModel.get(p1).getTransforms().set(0,new Rotate(-newval.positionlat,Rotate.X_AXIS));
             planeToModel.get(p1).getTransforms().set(1,new Rotate(-newval.positionLon,Rotate.Y_AXIS));
@@ -130,7 +125,7 @@ public class ModelScene  {
         });
         Thread th1 =new Thread(t1);
         th1.setDaemon(true);
-        th1.start();
+        th1.start();*/
 //        Task<Position> t2 = p2.moveTo(new Position(0D,0D));
 //        t2.valueProperty().addListener((v,oldval,newval)->{
 //            planeToModel.get(p2).getTransforms().set(0,new Rotate(newval.positionlat,Rotate.X_AXIS));

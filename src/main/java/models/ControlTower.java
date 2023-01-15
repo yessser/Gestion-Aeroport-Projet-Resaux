@@ -1,10 +1,11 @@
 package models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class ControlTower {
+public class ControlTower implements Serializable {
     private HashMap<UUID,Plane> allPlanes;
     private HashMap<UUID,Station> allStations;
     private HashMap<UUID,Flight> allFlights;

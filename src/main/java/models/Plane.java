@@ -1,13 +1,11 @@
 package models;
 
-import javafx.application.Platform;
-import javafx.concurrent.Task;
-import javafx.geometry.Point3D;
-
+import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class Plane {
+public class Plane implements Serializable {
     private static int id = 0;
     private UUID idPlane;
     private Double reservoirMax;
@@ -20,6 +18,9 @@ public class Plane {
     private ArrayList<Plane> dangerZonePlanes=new ArrayList<>();
     private Position position;
     private PlaneState state;
+
+
+
 
 
 
@@ -119,16 +120,15 @@ public class Plane {
         p1.calculateRotation(p4);
 
     }
-     public Task<Position> moveTo(Position newPos){
+     public void moveTo(Position newPos, ServerInterface server) throws InterruptedException {
 //        TODO:update reservoir after each move
 //         todo check for crash
 //         todo if two planes going to the same station might soft lock cause they avoid each other
         //turn the plane to the distination direction
          currentRotation=this.position.calculateRotation(newPos);
 
-        Task<Position> task = new Task<Position>() {
-            @Override
-            protected Position call() throws Exception {
+
+
                 Double t;
                 System.out.println("STARTING THREAD");
 
@@ -159,15 +159,28 @@ public class Plane {
                                 position = nextPosLeft();
                             }
                     }
-                    updateValue(new Position(position.positionlat,position.positionLon));
+                    // TODO add call for client to get the new pos
+
+                    try {
+                        server.sendPosition(position);
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+
+
                     System.out.println("POS:"+position);
                 }
+
                 System.out.println("POOOOOOOOOOOP");
                 position=newPos;
-                return newPos;
-            }
-        };
-        return task;
+                 try {
+                     server.sendPosition(position);
+                 } catch (RemoteException e) {
+                     throw new RuntimeException(e);
+                 }
+
+
+
     }
 
     public UUID getIdPlane() {

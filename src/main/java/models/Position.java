@@ -3,7 +3,10 @@ package models;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Point3D;
-public class Position {
+
+import java.io.Serializable;
+
+public class Position implements Serializable {
 // this may not be needed and might just use Double its like this rn cause i tried  using BIND to the property
     public Double positionlat;
     public Double positionLon;
