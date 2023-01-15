@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1b1b1b;" stylesheets="@../../../Style/planeFormStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1b1b1b;" stylesheets="@../../../Style/planeFormStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.earth3dtest.FormPlaneController">
    <children>
-      <Text id="headT" layoutX="49.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textGeneral" text="New FLIGHT" />
+      <Text id="headT" layoutX="49.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textGeneral" text="New Plane" />
       <VBox layoutX="14.0" layoutY="80.0" prefHeight="250.0" prefWidth="510.0" spacing="10.0">
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="45.0">
@@ -26,7 +26,7 @@
                         <Insets left="35.0" right="3.0" top="2.0" />
                      </HBox.margin>
                   </Text>
-                  <TextField prefWidth="350.0" />
+                  <TextField fx:id="fuel" prefWidth="350.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="45.0">
@@ -40,7 +40,7 @@
                         <Insets left="35.0" top="2.0" />
                      </HBox.margin>
                   </Text>
-                  <TextField prefWidth="350.0" />
+                  <TextField fx:id="speed" prefWidth="350.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="45.0">
@@ -54,7 +54,7 @@
                         <Insets left="35.0" top="2.0" />
                      </HBox.margin>
                   </Text>
-                  <TextField prefWidth="350.0" />
+                  <TextField fx:id="RotationSpeed" prefWidth="350.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
@@ -68,11 +68,11 @@
                         <Insets left="40.0" right="12.0" top="2.0" />
                      </HBox.margin>
                   </Text>
-                  <ChoiceBox id="planeB" prefHeight="25.0" prefWidth="345.0" />
+                  <ChoiceBox id="planeB" fx:id="StationsChoice" prefHeight="25.0" prefWidth="345.0" />
                </children>
             </HBox>
          </children>
       </VBox>
-      <Button layoutX="478.0" layoutY="342.0" mnemonicParsing="false" styleClass="button-add" text="A D D" />
+      <Button layoutX="478.0" layoutY="342.0" mnemonicParsing="false" onAction="#addPlane" styleClass="button-add" text="A D D" />
    </children>
 </AnchorPane>

@@ -23,12 +23,14 @@
                <children>
                   <HBox layoutX="4.0" prefHeight="60.0" prefWidth="395.0" styleClass="TopGContainer" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
-                        <ToggleButton mnemonicParsing="false" prefHeight="62.0" prefWidth="119.0" stylesheets="@../../../Style/togglebtn.css" text="Stations">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="TOPG" />
-                           </toggleGroup></ToggleButton>
-                        <ToggleButton mnemonicParsing="false" prefHeight="62.0" prefWidth="119.0" stylesheets="@../../../Style/togglebtn.css" text="Flights" toggleGroup="$TOPG" />
-                        <ToggleButton mnemonicParsing="false" prefHeight="62.0" prefWidth="119.0" stylesheets="@../../../Style/togglebtn.css" text="Planes" toggleGroup="$TOPG" />
+
+                        <ToggleButton selected="true" fx:id="toggleStation" mnemonicParsing="false" prefHeight="62.0" prefWidth="119.0" stylesheets="@../../../Style/togglebtn.css" text="Stations">
+                            <toggleGroup>
+                                <ToggleGroup fx:id="TOPG" />
+                            </toggleGroup>
+                           </ToggleButton>
+                        <ToggleButton fx:id="toggleFlight" mnemonicParsing="false" prefHeight="62.0" prefWidth="119.0" stylesheets="@../../../Style/togglebtn.css" text="Flights" toggleGroup="$TOPG" />
+                        <ToggleButton fx:id="togglePlane" mnemonicParsing="false" prefHeight="62.0" prefWidth="119.0" stylesheets="@../../../Style/togglebtn.css" text="Planes" toggleGroup="$TOPG" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" layoutX="52.0" layoutY="69.0" prefHeight="50.0" prefWidth="200.0" spacing="158.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">

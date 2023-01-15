@@ -5,10 +5,21 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class ControlTower {
-    private HashMap<UUID,Plane> allPlanes;
-    private HashMap<UUID,Station> allStations;
-    private HashMap<UUID,Flight> allFlights;
+    private HashMap<UUID,Plane> allPlanes=new HashMap<>();
+    private HashMap<UUID,Station> allStations=new HashMap<>();
+    private HashMap<UUID,Flight> allFlights=new HashMap<>();
 
+    public HashMap<UUID, Plane> getAllPlanes() {
+        return allPlanes;
+    }
+
+    public HashMap<UUID, Station> getAllStations() {
+        return allStations;
+    }
+
+    public HashMap<UUID, Flight> getAllFlights() {
+        return allFlights;
+    }
     public void addStation(Station station){
         allStations.put(station.getIdStation(),station);
     }
