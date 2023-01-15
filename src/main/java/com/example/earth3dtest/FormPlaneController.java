@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import models.ControlTower;
 import models.Plane;
@@ -21,7 +22,6 @@ import java.util.ResourceBundle;
 
 public class FormPlaneController implements Initializable {
     ControlTower controlTower;
-
     @FXML
     private TextField RotationSpeed;
 
@@ -41,10 +41,18 @@ public class FormPlaneController implements Initializable {
     @FXML
     void addPlane(ActionEvent event) {
 //        TODO: check that the station got a spot left and that a station was chosen obviously
-        Plane p = new Plane(Double.valueOf(fuel.getText()),Double.valueOf(speed.getText()),
-                Double.valueOf(RotationSpeed.getText()),100D,300D,new Position(0D,0D));
-        controlTower.addPlane(p);
-        StationsChoice.getValue().addPlane(p);
+        if(StationsChoice.getValue().getStationPlanes().size()<StationsChoice.getValue().getMaxNumberOfPlanes()){
+            Plane p = new Plane(Double.valueOf(fuel.getText()),Double.valueOf(speed.getText()),
+                    Double.valueOf(RotationSpeed.getText()),100D,300D,new Position(0D,0D));
+            controlTower.addPlane(p);
+            StationsChoice.getValue().addPlane(p);
+            Stage stage=(Stage) speed.getScene().getWindow();
+            stage.close();
+        }else{
+            System.out.println("station is full");
+
+        }
+
     }
 
     @Override

@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import models.ControlTower;
 import models.Position;
 import models.Station;
@@ -38,6 +39,8 @@ public class FormStationController implements Initializable {
     void addStation(ActionEvent event) {
             controlTower.addStation(new Station(name.getText(),new Position(Double.valueOf(lat.getText()),Double.valueOf(lon.getText())),
                     Double.valueOf(fuel.getText()),Integer.parseInt(capacity.getText())));
+        Stage stage=(Stage) name.getScene().getWindow();
+        stage.close();
     }
 
     @Override

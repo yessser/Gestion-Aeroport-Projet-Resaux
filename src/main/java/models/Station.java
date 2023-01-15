@@ -47,4 +47,8 @@ public class Station {
     public String getNameStation() {
         return nameStation;
     }
+
+    public int getMaxNumberOfPlanes() {
+        return maxNumberOfPlanes;
+    }
 }

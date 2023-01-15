@@ -20,6 +20,7 @@ public class ControlTower {
     public HashMap<UUID, Flight> getAllFlights() {
         return allFlights;
     }
+    public void addFlight(Flight flight){allFlights.put(flight.getIdFlight(),flight);}
     public void addStation(Station station){
         allStations.put(station.getIdStation(),station);
     }

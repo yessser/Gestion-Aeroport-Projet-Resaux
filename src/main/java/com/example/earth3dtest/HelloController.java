@@ -211,7 +211,8 @@ public class HelloController implements Initializable{
         if(toggleFlight.isSelected()){
             fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("FormFlights.fxml"));
             p=fxmlLoader.load();
-
+            FormFlightController c = fxmlLoader.getController();
+            c.setControlTower(controlTower);
         }
         if (togglePlane.isSelected()){
             fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("FormPlane.fxml"));
