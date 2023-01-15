@@ -48,4 +48,8 @@ public class Station implements Serializable {
     public String getNameStation() {
         return nameStation;
     }
+
+    public int getMaxNumberOfPlanes() {
+        return maxNumberOfPlanes;
+    }
 }

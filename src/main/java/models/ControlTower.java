@@ -10,6 +10,18 @@ public class ControlTower implements Serializable {
     private HashMap<UUID,Station> allStations;
     private HashMap<UUID,Flight> allFlights;
 
+    public HashMap<UUID, Plane> getAllPlanes() {
+        return allPlanes;
+    }
+
+    public HashMap<UUID, Station> getAllStations() {
+        return allStations;
+    }
+
+    public HashMap<UUID, Flight> getAllFlights() {
+        return allFlights;
+    }
+    public void addFlight(Flight flight){allFlights.put(flight.getIdFlight(),flight);}
     public void addStation(Station station){
         allStations.put(station.getIdStation(),station);
     }
