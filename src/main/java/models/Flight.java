@@ -18,7 +18,11 @@ public class Flight {
         return visitedStations.get(0);
     }
 
-    public Flight(Plane plane,ArrayList<Station> stations) throws Exception {
+    public UUID getIdFlight() {
+        return idFlight;
+    }
+
+    public Flight(Plane plane, ArrayList<Station> stations) throws Exception {
         if(stations.get(0).getStationPlanes().containsValue(plane)){
             throw new Exception("plane isnt in the starting station");
         }

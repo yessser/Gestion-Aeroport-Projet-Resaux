@@ -103,8 +103,13 @@ public class ModelScene  {
         earthScene.setRoot(root);
         earthScene.setCamera(camera);
 
+
+
+    }
+
+    public void startPlanes(){
         Plane p1 = new Plane(1000D,100D/6372.8,Math.toRadians(30D),20D,400D,new Position(18.072901436065006, 12.648535768909904));
-//        Plane p2 = new Plane(1000D,100D/6372.8,Math.toRadians(30D),20D,400D,new Position(10D,5D));
+        Plane p2 = new Plane(1000D,100D/6372.8,Math.toRadians(30D),20D,400D,new Position(10D,5D));
 //        Plane p3 = new Plane(1000D,100D/6372.8,Math.toRadians(30D),20D,400D,new Position(10D,6D));
 //        Plane p4 = new Plane(1000D,100D/6372.8,Math.toRadians(30D),20D,400D,new Position(-10D,-10D));
         spawnPlane(p1);
