@@ -2,6 +2,7 @@ package com.example.earth3dtest;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,6 +13,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import javafx.util.Callback;
 import models.*;
 
 import java.io.IOException;
@@ -33,6 +36,7 @@ public class HelloController implements Initializable{
     public ToggleButton toggleFlight;
     public ToggleButton toggleStation;
     public ToggleButton togglePlane;
+    public ListView<Station> contentList;
 
     ObservableList<PlaneData> planeData = FXCollections.observableArrayList();
     public TableColumn<StationDat,String> StationName;
@@ -60,9 +64,11 @@ public class HelloController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         controlTower.addStation(new Station("xD",new Position(0D,0D),100D,10));
+//        controlTower.addStation(new Station("xD",new Position(0D,0D),100D,10));
+//        controlTower.addStation(new Station("xD",new Position(0D,0D),100D,10));
         controlTower.addStation(new Station("xD",new Position(0D,0D),100D,10));
-        controlTower.addStation(new Station("xD",new Position(0D,0D),100D,10));
-        controlTower.addStation(new Station("xD",new Position(0D,0D),100D,10));
+        contentList.setCellFactory(s->new StationComponentController());
+
         /*
         /*
         /*
@@ -133,12 +139,6 @@ public class HelloController implements Initializable{
     }
 
     @FXML
-    void initialize(){
-
-    }
-
-
-    @FXML
     protected void onHelloButtonClick() {
       if(!started){
         modelScene.startAnimation();
@@ -174,26 +174,30 @@ public class HelloController implements Initializable{
 
     public void SelectedOption(){
 
-        tableView.setVisible(false);
-        tableFlights.setVisible(true);
-        tableStations.setVisible(false);
+//        tableView.setVisible(false);
+//        tableFlights.setVisible(true);
+//        tableStations.setVisible(false);
 
        // modelScene.startPlanes();
 
     }
 
     public void SelectedOptionStations(){
+        for (Station s:controlTower.getAllStations().values()) {
+            System.out.println(s.getNameStation());
+        }
 
-
-        tableView.setVisible(false);
-        tableFlights.setVisible(false);
-        tableStations.setVisible(true);
+        contentList.setItems(FXCollections.observableArrayList(controlTower.getAllStations().values()));
+        contentList.setVisible(true);
+//        tableView.setVisible(false);
+//        tableFlights.setVisible(false);
+//        tableStations.setVisible(true);
 
     }
     public void SelectedOptionPlanes(){
-        tableView.setVisible(true);
-        tableFlights.setVisible(false);
-        tableStations.setVisible(false);
+//        tableView.setVisible(true);
+//        tableFlights.setVisible(false);
+//        tableStations.setVisible(false);
     }
 
 
@@ -229,6 +233,11 @@ public class HelloController implements Initializable{
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>(){
+            @Override
+            public void handle(WindowEvent e){
+            }
+        });
     }
 
 

@@ -6,9 +6,9 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class ControlTower implements Serializable {
-    private HashMap<UUID,Plane> allPlanes;
-    private HashMap<UUID,Station> allStations;
-    private HashMap<UUID,Flight> allFlights;
+    private HashMap<UUID,Plane> allPlanes=new HashMap<>();
+    private HashMap<UUID,Station> allStations=new HashMap<>();
+    private HashMap<UUID,Flight> allFlights=new HashMap<>();
 
     public HashMap<UUID, Plane> getAllPlanes() {
         return allPlanes;

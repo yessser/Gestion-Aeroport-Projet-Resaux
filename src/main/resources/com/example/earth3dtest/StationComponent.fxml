@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Text?>
+
+
+<HBox fx:id="HBOX" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="271.0" spacing="10.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text fx:id="StationName" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="stationLat" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="stationLon" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+   </children>
+</HBox>
