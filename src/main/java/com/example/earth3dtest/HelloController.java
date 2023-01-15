@@ -203,10 +203,15 @@ public class HelloController implements Initializable{
         FXMLLoader fxmlLoader=null;
         if(toggleStation.isSelected()){
             fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("formStation.fxml"));
+            p=fxmlLoader.load();
+            FormStationController c = fxmlLoader.getController();
+            c.setControlTower(controlTower);
 
         }
         if(toggleFlight.isSelected()){
             fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("FormFlights.fxml"));
+            p=fxmlLoader.load();
+
         }
         if (togglePlane.isSelected()){
             fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("FormPlane.fxml"));
