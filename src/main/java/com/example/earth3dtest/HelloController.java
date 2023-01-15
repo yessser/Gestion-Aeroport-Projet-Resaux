@@ -26,6 +26,7 @@ public class HelloController {
 
     @FXML
     void initialize(){
+//        server start
         InitSubScene();
     }
 
@@ -37,6 +38,8 @@ public class HelloController {
     }
     @FXML
     protected void onAddStationButton(){
+//        spawnPlane
+//        server.startflight(F)
         modelScene.setNewStationActive(true);
 //        modelScene.move(10D,0D);
     }

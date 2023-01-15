@@ -5,70 +5,58 @@ import javafx.beans.property.DoubleProperty;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ClientHandler implements Runnable {
-    public static ArrayList<ClientHandler> clientHandlers = new ArrayList();
+    public static HashMap<Plane,ClientHandler> clientHandlers = new HashMap<>();
     private Socket socket;
-    private BufferedReader bufferedReader;
-    private BufferedWriter bufferedWriter;
-    private String clientUsername;
-    private Position position;
+    public ObjectInputStream bufferedReader;
+    public ObjectOutputStream bufferedWriter;
     public float positionlat;
     public float positionLon;
 
     public ClientHandler(Socket socket) {
         try {
+            System.out.println("BEEP");
+
             this.socket = socket;
-            this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            this.clientUsername = this.bufferedReader.readLine();
-            clientHandlers.add(this);
+            System.out.println("read object ");
+            this.bufferedReader = new ObjectInputStream(socket.getInputStream());
+            Plane p = (Plane)bufferedReader.readObject();
+            System.out.println(p.getPosition());
+            clientHandlers.put(p,this);
+
         } catch (IOException var3) {
             this.closeEverything(socket, this.bufferedReader, this.bufferedWriter);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
-
+        System.out.println("crash");
     }
 
     public void run() {
-        this.listenForMessage();
-        this.broadcastMessage();
+
     }
 
-    public void broadcastMessage() {
-        label23:
-        while(true) {
+//    public void sendDangerPlanes(ArrayList<Plane> dangerPlanes,Plane p) {
+//            try {
+//                for(ClientHandler clientHandler:clientHandlers){
+//                    clientHandler.bufferedWriter.writeObject(dangerPlanes);
+//                    clientHandler.bufferedWriter.flush();
+//                }
+//            } catch (IOException e) {
+//                this.closeEverything(this.socket, this.bufferedReader, this.bufferedWriter);
+//            } catch (Exception e) {
+//                throw new RuntimeException(e);
+//            }
+//
+//            return;
+//    }
 
-            try {
-                if (this.socket.isConnected()) {
-                    Scanner scanner = new Scanner(System.in);
-                    String msgToSend = scanner.nextLine();
-
-                    Iterator clientsList = clientHandlers.iterator();
-
-                    while(true) {
-                        if (!clientsList.hasNext()) {
-                            continue label23;
-                        }
-
-                        ClientHandler clientHandler = (ClientHandler)clientsList.next();
-                        clientHandler.bufferedWriter.write(msgToSend);
-                        clientHandler.bufferedWriter.newLine();
-                        clientHandler.bufferedWriter.flush();
-                    }
-                }
-            } catch (IOException e) {
-                this.closeEverything(this.socket, this.bufferedReader, this.bufferedWriter);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-
-            return;
-        }
-    }
 
     public void listenForMessage() {
 
@@ -105,10 +93,10 @@ public class ClientHandler implements Runnable {
 
     public void removeClientHandler() {
         clientHandlers.remove(this);
-        this.broadcastMessage();
+//        this.broadcastMessage();
     }
 
-    public void closeEverything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
+    public void closeEverything(Socket socket, ObjectInputStream bufferedReader, ObjectOutputStream bufferedWriter) {
         this.removeClientHandler();
 
         try {

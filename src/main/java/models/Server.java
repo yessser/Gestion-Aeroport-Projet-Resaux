@@ -19,9 +19,9 @@ public class Server {
                     Socket socket = this.serverSocket.accept();
                     System.out.println("A new Client connected");
                     ClientHandler clientHandler = new ClientHandler(socket);
-                    Thread thread = new Thread(clientHandler);
-                    thread.start();
-
+                    System.out.println(ClientHandler.clientHandlers.values());
+                            Thread thread = new Thread(clientHandler);
+//                    thread.start();
                    // System.out.println(ClientHandler.clientHandlers.size());
                     continue;
                 }
@@ -31,6 +31,9 @@ public class Server {
 
             return;
         }
+    }
+    public void startFlight(Flight f){
+        ClientHandler cli= ClientHandler.clientHandlers.get(f.plane);
     }
 
     public void closeServerSocket() {

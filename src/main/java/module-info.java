@@ -6,6 +6,7 @@ module com.example.earth3dtest {
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
     requires jimObjModelImporterJFX;
+    requires de.jensd.fx.glyphs.fontawesome;
 
     opens com.example.earth3dtest to javafx.fxml;
     exports com.example.earth3dtest;

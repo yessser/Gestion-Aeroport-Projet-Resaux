@@ -2,13 +2,14 @@ package models;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Client {
 
     private Socket socket;
-    private BufferedReader bufferedReader;
-    private BufferedWriter bufferedWriter;
+    private ObjectInputStream bufferedReader;
+    private ObjectOutputStream bufferedWriter;
     private String username;
 
     private Plane airplane;
@@ -16,8 +17,7 @@ public class Client {
     public Client(Socket socket, String username, Plane airplane) {
         try {
             this.socket = socket;
-            this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            this.bufferedWriter = new ObjectOutputStream(socket.getOutputStream());
             this.username = username;
             this.airplane = airplane;
         } catch (IOException var4) {
@@ -26,48 +26,50 @@ public class Client {
 
     }
 
-    public void sendMessage(Position pos) {
-        try {
-           /* this.bufferedWriter.write(this.username);
-            this.bufferedWriter.newLine();
-            this.bufferedWriter.flush();*/
-            Scanner scanner = new Scanner(System.in);
-
-            while(this.socket.isConnected()) {
-
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-
-                String messageToSend = scanner.nextLine();
-                this.bufferedWriter.write(this.username + " : " + pos.toString());
-                this.bufferedWriter.newLine();
-                this.bufferedWriter.flush();
-            }
-        } catch (IOException var3) {
-            this.closeEverything(this.socket, this.bufferedReader, this.bufferedWriter);
-        }
-
-    }
-
+//    public void sendMessage(Position pos) {
+//        try {
+//           /* this.bufferedWriter.write(this.username);
+//            this.bufferedWriter.newLine();
+//            this.bufferedWriter.flush();*/
+//            Scanner scanner = new Scanner(System.in);
+//
+//            while(this.socket.isConnected()) {
+//
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException e) {
+//                    throw new RuntimeException(e);
+//                }
+//
+//                String messageToSend = scanner.nextLine();
+//                this.bufferedWriter.write(this.username + " : " + pos.toString());
+//                this.bufferedWriter.newLine();
+//                this.bufferedWriter.flush();
+//            }
+//        } catch (IOException var3) {
+//            this.closeEverything(this.socket, this.bufferedReader, this.bufferedWriter);
+//        }
+//
+//    }
+//
     public void listenForMessage() {
         (new Thread(() -> {
             while(Client.this.socket.isConnected()) {
                 try {
-                    String msgFromTower = Client.this.bufferedReader.readLine();
-                    System.out.println(msgFromTower);
+
+                    ArrayList<Plane> msgFromTower = (ArrayList<Plane>)Client.this.bufferedReader.readObject();
                   //  System.out.println(airplane.getPosition().toString());
                 } catch (IOException var3) {
                     Client.this.closeEverything(Client.this.socket, Client.this.bufferedReader, Client.this.bufferedWriter);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
                 }
             }
 
         })).start();
     }
 
-    public void closeEverything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
+    public void closeEverything(Socket socket, ObjectInputStream bufferedReader, ObjectOutputStream bufferedWriter) {
         try {
             if (bufferedReader != null) {
                 bufferedReader.close();
@@ -95,11 +97,14 @@ public class Client {
         String username = plane.getIdPlane().toString();
         new Scanner(System.in);
         Socket socket = new Socket("localhost", 3337);
-
-
         Client client = new Client(socket, username, plane);
-
+        System.out.println("writin plane");
+        client.bufferedWriter.writeObject(plane);
+        client.bufferedWriter.flush();
         client.listenForMessage();
-        client.sendMessage(plane.getPosition());
+    }
+
+    public Plane getAirplane() {
+        return airplane;
     }
 }
