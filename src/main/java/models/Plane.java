@@ -37,8 +37,8 @@ public class Plane {
         return currentRotation;
     }
     Position nextPos(){
-        double prelat = Math.toRadians(this.position.positionlat.get());
-        double prelon = Math.toRadians(this.position.positionLon.get());
+        double prelat = Math.toRadians(this.position.positionlat);
+        double prelon = Math.toRadians(this.position.positionLon);
         Double lat =Math.asin(Math.sin(prelat)*Math.cos(speed)
                 +Math.cos(prelat)*Math.sin(speed)*Math.cos(currentRotation));
         Double lon = prelon+
@@ -49,13 +49,13 @@ public class Plane {
     Position nextPos2(){
         double dx=speed*6372.8*Math.sin(currentRotation);
         double dy=speed*6372.8*Math.cos(currentRotation);
-        double deltalon = dx/111.320*Math.cos(position.positionlat.get());
+        double deltalon = dx/111.320*Math.cos(position.positionlat);
         double deltalat = dy/110.54;
-        return new Position(this.position.positionlat.get()+deltalat,this.position.positionLon.get()+deltalon);
+        return new Position(this.position.positionlat+deltalat,this.position.positionLon+deltalon);
     }
     Position nextPosRight(){
-        double prelat = Math.toRadians(this.position.positionlat.get());
-        double prelon = Math.toRadians(this.position.positionLon.get());
+        double prelat = Math.toRadians(this.position.positionlat);
+        double prelon = Math.toRadians(this.position.positionLon);
         Double lat =Math.asin(Math.sin(prelat)*Math.cos(speed)
                 +Math.cos(prelat)*Math.sin(speed)*Math.cos(currentRotation+rotationSpeed));
         Double lon = prelon+
@@ -64,13 +64,13 @@ public class Plane {
         return new Position(Math.toDegrees(lat),Math.toDegrees(lon));
 //        double dx=speed*6372.8*Math.sin(currentRotation+rotationSpeed);
 //        double dy=speed*6372.8*Math.cos(currentRotation+rotationSpeed);
-//        double deltalon = dx/111.320*Math.cos(position.positionlat.get());
+//        double deltalon = dx/111.320*Math.cos(position.positionlat);
 //        double deltalat = dy/110.54;
-//        return new Position(this.position.positionlat.get()+deltalat,this.position.positionLon.get()+deltalon);
+//        return new Position(this.position.positionlat+deltalat,this.position.positionLon+deltalon);
     }
     Position nextPosLeft(){
-        double prelat = Math.toRadians(this.position.positionlat.get());
-        double prelon = Math.toRadians(this.position.positionLon.get());
+        double prelat = Math.toRadians(this.position.positionlat);
+        double prelon = Math.toRadians(this.position.positionLon);
         Double lat2 =Math.asin(Math.sin(prelat)*Math.cos(speed)
                 +Math.cos(prelat)*Math.sin(speed)*Math.cos(currentRotation-rotationSpeed));
         Double lon2 = prelon+
@@ -79,9 +79,9 @@ public class Plane {
         return new Position(Math.toDegrees(lat2),Math.toDegrees(lon2));
 //        double dx=speed*6372.8*Math.sin(currentRotation-rotationSpeed);
 //        double dy=speed*6372.8*Math.cos(currentRotation-rotationSpeed);
-//        double deltalon = dx/111.320*Math.cos(position.positionlat.get());
+//        double deltalon = dx/111.320*Math.cos(position.positionlat);
 //        double deltalat = dy/110.54;
-//        return new Position(this.position.positionlat.get()+deltalat,this.position.positionLon.get()+deltalon);
+//        return new Position(this.position.positionlat+deltalat,this.position.positionLon+deltalon);
     }
     Position nextPosClosest(Position p){
 
@@ -159,7 +159,7 @@ public class Plane {
                                 position = nextPosLeft();
                             }
                     }
-                    updateValue(new Position(position.positionlat.get(),position.positionLon.get()));
+                    updateValue(new Position(position.positionlat,position.positionLon));
                     System.out.println("POS:"+position);
                 }
                 System.out.println("POOOOOOOOOOOP");

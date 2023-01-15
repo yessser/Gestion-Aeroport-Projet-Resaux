@@ -5,8 +5,8 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Point3D;
 public class Position {
 // this may not be needed and might just use Double its like this rn cause i tried  using BIND to the property
-    public DoubleProperty positionlat;
-    public DoubleProperty positionLon;
+    public Double positionlat;
+    public Double positionLon;
 
     public Position(Position newPosition) {
         this.positionlat=newPosition.positionlat;
@@ -21,10 +21,7 @@ public class Position {
                 '}';
     }
 
-    public Position(DoubleProperty positionlatProperty, DoubleProperty positionLonProperty) {
-        this.positionlat = positionlatProperty;
-        this.positionLon = positionLonProperty;
-    }
+
     public Position(Double positionlat, Double positionLon) {
         if(positionLon>180||positionLon<=-180){
             positionLon=-1*positionLon%180;
@@ -32,17 +29,17 @@ public class Position {
         if(positionlat>90||positionlat<=-90){
             positionlat=-1*positionlat%90;
         }
-        this.positionlat = new SimpleDoubleProperty(positionlat);
-        this.positionLon = new SimpleDoubleProperty(positionLon);
+        this.positionlat = positionlat;
+        this.positionLon = positionLon;
     }
     public Double distance(Position newPos) {
 
         final double R = 6372.8; // Earth's radius In kilometers
 
-        double dLat = Math.toRadians(newPos.positionlat.get() - positionlat.get());
-        double dLon = Math.toRadians(newPos.positionLon.get() - positionLon.get());
-        double lat1 = Math.toRadians(positionlat.get());
-        double lat2 = Math.toRadians(newPos.positionlat.get());
+        double dLat = Math.toRadians(newPos.positionlat - positionlat);
+        double dLon = Math.toRadians(newPos.positionLon - positionLon);
+        double lat1 = Math.toRadians(positionlat);
+        double lat2 = Math.toRadians(newPos.positionlat);
 
         double a = Math.pow(Math.sin(dLat / 2),2) + Math.pow(Math.sin(dLon / 2),2) * Math.cos(lat1) * Math.cos(lat2);
         double c = 2 * Math.asin(Math.sqrt(a));
@@ -72,9 +69,9 @@ public class Position {
 
     public Point3D toVec() {
         return new Point3D(
-                Math.cos(Math.toRadians(this.positionlat.get()))*Math.sin(Math.toRadians(this.positionLon.get())), //our east is on x
-                Math.sin(Math.toRadians(this.positionlat.get()))*-1,// our north point is on -y
-                Math.cos(Math.toRadians(this.positionlat.get()))*Math.cos(Math.toRadians(this.positionLon.get()))*-1//our 0 0 cord is in -z
+                Math.cos(Math.toRadians(this.positionlat))*Math.sin(Math.toRadians(this.positionLon)), //our east is on x
+                Math.sin(Math.toRadians(this.positionlat))*-1,// our north point is on -y
+                Math.cos(Math.toRadians(this.positionlat))*Math.cos(Math.toRadians(this.positionLon))*-1//our 0 0 cord is in -z
         );
     }
 

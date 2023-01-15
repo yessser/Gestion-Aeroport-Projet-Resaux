@@ -39,4 +39,12 @@ public class Station {
     public UUID getIdStation() {
         return idStation;
     }
+
+    public void setNameStation(String nameStation) {
+        this.nameStation = nameStation;
+    }
+
+    public String getNameStation() {
+        return nameStation;
+    }
 }

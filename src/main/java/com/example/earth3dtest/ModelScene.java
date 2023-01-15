@@ -103,66 +103,72 @@ public class ModelScene  {
         earthScene.setRoot(root);
         earthScene.setCamera(camera);
 
-        Plane p1 = new Plane(1000D,100D/6372.8,Math.toRadians(30D),20D,400D,new Position(90D,180D));
-        Plane p2 = new Plane(1000D,100D/6372.8,Math.toRadians(30D),20D,400D,new Position(10D,10D));
+        Plane p1 = new Plane(1000D,100D/6372.8,Math.toRadians(30D),20D,400D,new Position(18.072901436065006, 12.648535768909904));
+//        Plane p2 = new Plane(1000D,100D/6372.8,Math.toRadians(30D),20D,400D,new Position(10D,5D));
+//        Plane p3 = new Plane(1000D,100D/6372.8,Math.toRadians(30D),20D,400D,new Position(10D,6D));
+//        Plane p4 = new Plane(1000D,100D/6372.8,Math.toRadians(30D),20D,400D,new Position(-10D,-10D));
         spawnPlane(p1);
-        spawnPlane(p2);
+//        spawnPlane(p2);
+//        spawnPlane(p3);
+//        spawnPlane(p4);
 //        p1.addDangerZonePlane(p2);
+//        p1.addDangerZonePlane(p3);
+//        p1.addDangerZonePlane(p4);
 //        p2.addDangerZonePlane(p1);
 //        to link flight and the plane
-        Task<Position> t1 = p1.moveTo(new Position(10D,10D));
+        Task<Position> t1 = p1.moveTo(new Position(0D,10D));
         t1.valueProperty().addListener((v,oldval,newval)->{
-            planeToModel.get(p1).getTransforms().set(0,new Rotate(newval.positionlat.get(),Rotate.X_AXIS));
-            planeToModel.get(p1).getTransforms().set(1,new Rotate(newval.positionLon.get(),Rotate.Y_AXIS));
+            planeToModel.get(p1).getTransforms().set(0,new Rotate(-newval.positionlat,Rotate.X_AXIS));
+            planeToModel.get(p1).getTransforms().set(1,new Rotate(-newval.positionLon,Rotate.Y_AXIS));
 //            todo: fix plane rotation
-            planeToModel.get(p1).getTransforms().set(4,new Rotate(Math.toDegrees(p1.getCurrentRotation()),Rotate.Y_AXIS));
+            planeToModel.get(p1).getTransforms().set(4,new Rotate(180+Math.toDegrees(p1.getCurrentRotation()),Rotate.Y_AXIS));
         });
         Thread th1 =new Thread(t1);
         th1.setDaemon(true);
         th1.start();
-        Task<Position> t2 = p2.moveTo(new Position(0D,0D));
-        t2.valueProperty().addListener((v,oldval,newval)->{
-            planeToModel.get(p2).getTransforms().set(0,new Rotate(newval.positionlat.get(),Rotate.X_AXIS));
-            planeToModel.get(p2).getTransforms().set(1,new Rotate(newval.positionLon.get(),Rotate.Y_AXIS));
-//            todo: fix plane rotation
-            planeToModel.get(p2).getTransforms().set(4,new Rotate(Math.toDegrees(p2.getCurrentRotation()),Rotate.Y_AXIS));
-        });
-        Thread th2 =new Thread(t2);
-        th2.setDaemon(true);
-        th2.start();
+//        Task<Position> t2 = p2.moveTo(new Position(0D,0D));
+//        t2.valueProperty().addListener((v,oldval,newval)->{
+//            planeToModel.get(p2).getTransforms().set(0,new Rotate(newval.positionlat,Rotate.X_AXIS));
+//            planeToModel.get(p2).getTransforms().set(1,new Rotate(newval.positionLon,Rotate.Y_AXIS));
+////            todo: fix plane rotation
+//            planeToModel.get(p2).getTransforms().set(4,new Rotate(Math.toDegrees(p2.getCurrentRotation()),Rotate.Y_AXIS));
+//        });
+//        Thread th2 =new Thread(t2);
+//        th2.setDaemon(true);
+//        th2.start();
 
     }
 
-    private void spawnPlane(Plane p){
+    public void spawnPlane(Plane p){
         Group plane =  loadModel(getClass().getResource("/plane/airplane.obj"));
         planeToModel.put(p,plane);
         Rotate lat;
         Rotate lon;
-        plane.getTransforms().addAll(lat=new Rotate(p.getPosition().positionlat.get(), Rotate.X_AXIS),
-                                     lon=new Rotate(p.getPosition().positionLon.get(), Rotate.Y_AXIS));
-        plane.getTransforms().add(new Translate(0,0,-1.001));
-        plane.getTransforms().add(new Rotate(180,Rotate.X_AXIS));
-        plane.getTransforms().add(new Rotate(0,Rotate.Y_AXIS));
-        plane.getTransforms().add(new Rotate(90,Rotate.Z_AXIS));
+        plane.getTransforms().addAll(lat=new Rotate(-p.getPosition().positionlat, Rotate.X_AXIS),
+                                     lon=new Rotate(-p.getPosition().positionLon, Rotate.Y_AXIS));
+        plane.getTransforms().add(new Translate(0,0,-0.98));
+        plane.getTransforms().add(new Rotate(90,Rotate.X_AXIS));
+        plane.getTransforms().add(new Rotate(180,Rotate.Y_AXIS));
+        plane.getTransforms().add(new Rotate(0,Rotate.Z_AXIS));
 
         model.getChildren().add(plane);
     }
-    private void  removePlane(Plane p){
+    public void  removePlane(Plane p){
         model.getChildren().remove(planeToModel.get(p));
         planeToModel.remove(p);
     }
-    private void spawnStation(Station s) {
+    public void spawnStation(Station s) {
 //        TODO:LOAD STATION MODEL HERE with all the parameters
         Group station = loadModel(getClass().getResource("/station/station.obj"));
         stationToModel.put(s,station);
 //        TODO fix translation to lat and lon
 //        Double lat = -1*Math.atan2(t.getY()*-1,Math.sqrt(Math.pow(t.getZ()*-1,2)+Math.pow(t.getX(),2)));
 //        Double lon = -1*Math.atan2(t.getX(),t.getZ()*-1);
-        station.getTransforms().addAll(new Rotate(Math.toDegrees(s.getPosition().positionlat.get()), Rotate.X_AXIS),new Rotate(s.getPosition().positionLon.get(), Rotate.Y_AXIS));
+        station.getTransforms().addAll(new Rotate(Math.toDegrees(s.getPosition().positionlat), Rotate.X_AXIS),new Rotate(s.getPosition().positionLon, Rotate.Y_AXIS));
         station.getTransforms().add(new Translate(0,0,-1.001));
         model.getChildren().add(station);
     }
-    private void removeStation(Station s){
+    public void removeStation(Station s){
         model.getChildren().remove(stationToModel.get(s));
         stationToModel.remove(s);
     }
