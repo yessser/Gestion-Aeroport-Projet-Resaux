@@ -9,7 +9,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
     private ExecutorService threadPool;
     private Map<Plane, Thread> threadMap;
     private Object lock;
-
+    private ControlTower controlTower;
     public Server() throws RemoteException {
         super();
         threadPool = Executors.newCachedThreadPool();
@@ -24,6 +24,12 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
     }
 
 
+    public void updateStation(Station station)throws RemoteException{
+        controlTower.getAllStations().put(station.getIdStation(),station);
+    }
+    public Collection<Station> getAllStations() throws RemoteException{
+        return controlTower.getAllStations().values();
+    }
     public void bindClientPlane(Plane obj) throws RemoteException {
         threadPool.execute(() -> {
             //Handle the received object in a separate thread
@@ -88,11 +94,11 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
             System.out.println("Server ready.");
 
             // testing ***
-            Thread.sleep(5000);
+
 
             System.out.println(server.getThreadMap().values());
 
-            Thread.sleep(5000);
+
 
             // wake client
             server.startFlight();
