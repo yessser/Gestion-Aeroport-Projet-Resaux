@@ -8,6 +8,8 @@ import java.util.concurrent.*;
 public class Server extends UnicastRemoteObject implements ServerInterface {
     private ExecutorService threadPool;
     private Map<Plane, Thread> threadMap;
+    private Map<UUID, Object> lockMap = new HashMap<>();
+
     private Object lock;
     private ControlTower controlTower;
     public Server() throws RemoteException {
@@ -15,6 +17,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
         threadPool = Executors.newCachedThreadPool();
         threadMap = new HashMap<>();
         lock = new Object();
+
     }
 
     public Plane getObject() throws RemoteException {
@@ -35,15 +38,27 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
             //Handle the received object in a separate thread
             Thread currentThread = Thread.currentThread();
             threadMap.put(obj, currentThread);
+            Object lockC = new Object();
+            lockMap.put(obj.getIdPlane(), lockC);
             System.out.println("Received object: " + obj);
+
+            //* test
         });
     }
 
 
-    public void startFlight() throws RemoteException {
-            synchronized (lock) {
-                lock.notify();
+    public void startFlight(UUID id) throws RemoteException {
+
+            // checks for the existence of a flight for a plane before notifying the plane client
+
+            Object locky = lockMap.get(id);
+
+            synchronized (locky) {
+                locky.notify();
             }
+
+
+
     }
 
     public Flight getFlight() throws RemoteException {
@@ -53,8 +68,15 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
         Position pos = new Position(45.0,44.0);
         Plane objToSend = new Plane(55.0, 456.0, 55.0, 55.0, 45.0,pos);
         ArrayList<Station> lst = new ArrayList<>();
-        lst.add(new Station("ff",pos,1.0,5));
+        Station s = new Station("ff",pos,1.0,5);
+        s.addPlane(objToSend);
+        lst.add(s);
+
+
+
         try {
+
+
 
             return new Flight(objToSend,lst);
         } catch (Exception e) {
@@ -70,15 +92,23 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
         System.out.println(position.positionLon + position.positionLon);
     }
 
-    public void waitForFlight() throws RemoteException {
+    public Flight waitForFlight(UUID id) throws RemoteException {
 
-        synchronized (lock) {
+        Object locky = lockMap.get(id);
+        System.out.println(locky);
+        synchronized (locky) {
             try {
-                lock.wait();
+                locky.wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+
+        Flight flight = controlTower.searchFlightByPlaneID(id);
+        if (flight != null) {
+            return flight;
+        }
+        return null;
     }
 
     public Map<Plane, Thread> getThreadMap() throws RemoteException{
@@ -94,14 +124,16 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
             System.out.println("Server ready.");
 
             // testing ***
-
+            Thread.sleep(5000);
 
             System.out.println(server.getThreadMap().values());
 
+            Thread.sleep(15000);
+            System.out.println("it's trying with multi clients ");
 
 
             // wake client
-            server.startFlight();
+            //server.startFlight();
 
             // *******
         } catch (Exception e) {

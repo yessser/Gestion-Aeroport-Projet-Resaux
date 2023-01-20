@@ -41,7 +41,7 @@ public class Client {
     public void waitFlightCommand(){
         while (true) {
             try {
-                server.waitForFlight();
+                //server.waitForFlight();
                 Flight currentFlight = server.getFlight();
                 currentFlight.startStation().removePlane(plane.getIdPlane());
                 updateStation(currentFlight.startStation());
@@ -73,12 +73,31 @@ public class Client {
             // *****
 
             // Send the object to the server
+            server.bindClientPlane(p1);
+
+            System.out.println("client here" + p1.getIdPlane());
 
 
-            // wait for Flight signal
+            while(true) {
+                // wait for Flight signal
+                Flight flight = server.waitForFlight(p1.getIdPlane());
 
+                // while there's no flight keep waiting
+                while (flight == null) {
+                    Thread.sleep(1000);
+                    flight = server.waitForFlight(p1.getIdPlane());
+                }
 
-            
+                System.out.println("i'm unlocked");
+                Flight currentFlight = server.getFlight();
+
+                for (int i = 0; i < currentFlight.visitedStations.size(); i++) {
+                    p1.moveTo(currentFlight.visitedStations.get(i).getPosition(), server);
+
+                }
+
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,6 +1,7 @@
 package models;
 
 import java.rmi.*;
+import java.util.UUID;
 import java.util.Collection;
 
 public interface ServerInterface extends Remote {
@@ -8,8 +9,8 @@ public interface ServerInterface extends Remote {
     public Collection<Station> getAllStations()throws RemoteException;
     public Plane getObject() throws RemoteException;
     public void bindClientPlane(Plane obj) throws RemoteException;
-    public void waitForFlight() throws RemoteException;
-    public void startFlight() throws RemoteException;
+    public Flight waitForFlight(UUID id) throws RemoteException;
+    public void startFlight(UUID id) throws RemoteException;
     public Flight getFlight() throws RemoteException;
     public void sendPosition(Position position) throws RemoteException;
 }

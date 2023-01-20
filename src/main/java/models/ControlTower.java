@@ -6,9 +6,9 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class ControlTower implements Serializable {
-    private HashMap<UUID,Plane> allPlanes=new HashMap<>();
-    private HashMap<UUID,Station> allStations=new HashMap<>();
-    private HashMap<UUID,Flight> allFlights=new HashMap<>();
+    private HashMap<UUID,Plane> allPlanes = new HashMap<>();
+    private HashMap<UUID,Station> allStations = new HashMap<>();
+    private HashMap<UUID,Flight> allFlights = new HashMap<>();
 
     public HashMap<UUID, Plane> getAllPlanes() {
         return allPlanes;
@@ -45,5 +45,18 @@ public class ControlTower implements Serializable {
             }
             p1.setDangerZonePlanes(dangerPlanes);
         }
+    }
+
+
+    public Flight searchFlightByPlaneID(UUID id) {
+
+        for (int i = 1; i < allFlights.size(); i++) {
+
+            if (allFlights.get(i).plane.getIdPlane().compareTo(id) == 0) {
+                return allFlights.get(i);
+            }
+        }
+
+        return null;
     }
 }
