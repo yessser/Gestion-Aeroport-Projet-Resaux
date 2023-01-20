@@ -11,10 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
-import models.ControlTower;
-import models.Flight;
-import models.Plane;
-import models.Station;
+import models.*;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -23,6 +20,8 @@ import java.util.ResourceBundle;
 public class FormFlightController implements Initializable {
 
     ControlTower controlTower;
+    private Server server;
+
     public  void setControlTower(ControlTower c){
         this.controlTower=c;
         StationChoice.setItems(FXCollections.observableArrayList(new ArrayList(controlTower.getAllStations().values())));
@@ -57,6 +56,7 @@ public class FormFlightController implements Initializable {
         if(airplaneChoice.getValue()!=null&&visitedStation.size()>=2) {
             try {
                 controlTower.addFlight(new Flight(airplaneChoice.getValue(),visitedStation));
+                server.startFlight(airplaneChoice.getValue().getIdPlane());
             } catch (Exception e) {
                 System.out.println("plane not in starting station SHOULDNT HAPPEN");
                 throw new RuntimeException(e);
@@ -95,5 +95,9 @@ public class FormFlightController implements Initializable {
         });
 
 
+    }
+
+    public void setServer(Server server) {
+        this.server = server;
     }
 }

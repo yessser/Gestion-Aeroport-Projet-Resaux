@@ -18,7 +18,10 @@ import javafx.util.Callback;
 import models.*;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.rmi.Naming;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
@@ -26,6 +29,15 @@ import java.util.regex.Pattern;
 
 public class HelloController implements Initializable{
     ControlTower controlTower= new ControlTower();
+    Server server;
+
+    {
+        try {
+            server = new Server();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public TableView<PlaneData> tableView;
     public TableView<FlightData> tableFlights;
@@ -36,6 +48,7 @@ public class HelloController implements Initializable{
     public ToggleButton toggleFlight;
     public ToggleButton toggleStation;
     public ToggleButton togglePlane;
+    public Button addElement;
     public ListView<Station> contentList;
 
     ObservableList<PlaneData> planeData = FXCollections.observableArrayList();
@@ -68,6 +81,14 @@ public class HelloController implements Initializable{
 //        controlTower.addStation(new Station("xD",new Position(0D,0D),100D,10));
         controlTower.addStation(new Station("xD",new Position(0D,0D),100D,10));
         contentList.setCellFactory(s->new StationComponentController());
+        try {
+            Naming.rebind("rmi://localhost:1099/MyServer", server);
+            System.out.println("server ready");
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
 
         /*
         /*
@@ -173,6 +194,8 @@ public class HelloController implements Initializable{
 
 
     public void SelectedOption(){
+        addElement.setCancelButton(true);
+        addElement.setVisible(true);
 
 //        tableView.setVisible(false);
 //        tableFlights.setVisible(true);
@@ -183,6 +206,8 @@ public class HelloController implements Initializable{
     }
 
     public void SelectedOptionStations(){
+        addElement.setCancelButton(true);
+        addElement.setVisible(true);
         for (Station s:controlTower.getAllStations().values()) {
             System.out.println(s.getNameStation());
         }
@@ -195,6 +220,8 @@ public class HelloController implements Initializable{
 
     }
     public void SelectedOptionPlanes(){
+        addElement.setCancelButton(false);
+        addElement.setVisible(false);
 //        tableView.setVisible(true);
 //        tableFlights.setVisible(false);
 //        tableStations.setVisible(false);
@@ -216,6 +243,7 @@ public class HelloController implements Initializable{
             fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("FormFlights.fxml"));
             p=fxmlLoader.load();
             FormFlightController c = fxmlLoader.getController();
+            c.setServer(server);
             c.setControlTower(controlTower);
         }
         if (togglePlane.isSelected()){

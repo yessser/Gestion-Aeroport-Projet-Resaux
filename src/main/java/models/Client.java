@@ -38,11 +38,12 @@ public class Client {
             throw new RuntimeException(e);
         }
     }
-    public void waitFlightCommand(){
+    public void waitFlightCommand(Plane p){
         while (true) {
             try {
-                //server.waitForFlight();
-                Flight currentFlight = server.getFlight();
+
+                Flight currentFlight = server.waitForFlight(p.getIdPlane());
+
                 currentFlight.startStation().removePlane(plane.getIdPlane());
                 updateStation(currentFlight.startStation());
 

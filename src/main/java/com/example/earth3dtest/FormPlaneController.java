@@ -11,10 +11,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
-import models.ControlTower;
-import models.Plane;
-import models.Position;
-import models.Station;
+import models.*;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -22,6 +19,7 @@ import java.util.ResourceBundle;
 
 public class FormPlaneController implements Initializable {
     ControlTower controlTower;
+    Client client=new Client();
     @FXML
     private TextField RotationSpeed;
 
@@ -40,14 +38,14 @@ public class FormPlaneController implements Initializable {
 
     @FXML
     void addPlane(ActionEvent event) {
-//        TODO: check that the station got a spot left and that a station was chosen obviously
+
         if(StationsChoice.getValue().getStationPlanes().size()<StationsChoice.getValue().getMaxNumberOfPlanes()){
             Plane p = new Plane(Double.valueOf(fuel.getText()),Double.valueOf(speed.getText()),
-                    Double.valueOf(RotationSpeed.getText()),100D,300D,new Position(0D,0D));
-            controlTower.addPlane(p);
+                    Double.valueOf(RotationSpeed.getText()),100D,300D,StationsChoice.getValue().getPosition());
+            client.sendPlane(p);
             StationsChoice.getValue().addPlane(p);
-            Stage stage=(Stage) speed.getScene().getWindow();
-            stage.close();
+            client.updateStation(StationsChoice.getValue());
+            client.waitFlightCommand(p);
         }else{
             System.out.println("station is full");
 
@@ -57,6 +55,8 @@ public class FormPlaneController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        client.connect();
+        StationsChoice.setItems(FXCollections.observableArrayList(client.getStations()));
         RotationSpeed.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue,
