@@ -21,6 +21,7 @@ public class FormFlightController implements Initializable {
 
     ControlTower controlTower;
     private Server server;
+    private ModelScene modelScene;
 
     public  void setControlTower(ControlTower c){
         this.controlTower=c;
@@ -56,6 +57,7 @@ public class FormFlightController implements Initializable {
         if(airplaneChoice.getValue()!=null&&visitedStation.size()>=2) {
             try {
                 controlTower.addFlight(new Flight(airplaneChoice.getValue(),visitedStation));
+                modelScene.spawnPlane(airplaneChoice.getValue());
                 server.startFlight(airplaneChoice.getValue().getIdPlane());
             } catch (Exception e) {
                 System.out.println("plane not in starting station SHOULDNT HAPPEN");
@@ -99,5 +101,9 @@ public class FormFlightController implements Initializable {
 
     public void setServer(Server server) {
         this.server = server;
+    }
+
+    public void setModelScene(ModelScene modelScene) {
+        this.modelScene=modelScene;
     }
 }

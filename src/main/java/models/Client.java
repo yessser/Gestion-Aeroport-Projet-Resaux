@@ -22,7 +22,10 @@ public class Client {
     public boolean connect(){
 
         try {
+
             server = (ServerInterface) Naming.lookup("rmi://localhost:1099/MyServer");
+            System.out.println("haloo");
+            System.out.println(server.getAllStations());
             stations=server.getAllStations();
             return true;
         } catch (NotBoundException | RemoteException | MalformedURLException ignored) {
@@ -51,6 +54,7 @@ public class Client {
                     plane.moveTo(currentFlight.visitedStations.get(i).getPosition(), server);
 
                 }
+                currentFlight.destinationStation().addPlane(plane);
                 updateStation(currentFlight.destinationStation());
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
@@ -72,7 +76,7 @@ public class Client {
             Position pos = new Position(45.0,44.0);
             Plane p1 = new Plane(55.0, 456.0, 55.0, 55.0, 45.0,pos);
             // *****
-
+            System.out.println(server.getAllStations());
             // Send the object to the server
             server.bindClientPlane(p1);
 

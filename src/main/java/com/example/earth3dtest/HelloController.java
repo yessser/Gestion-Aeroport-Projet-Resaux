@@ -28,7 +28,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class HelloController implements Initializable{
-    ControlTower controlTower= new ControlTower();
     Server server;
 
     {
@@ -74,12 +73,16 @@ public class HelloController implements Initializable{
     Plane p1 = new Plane(1000D,100D/6372.8,Math.toRadians(30D),20D,400D,new Position(90D,180D));
     Plane p2 = new Plane(1000D,100D/6372.8,Math.toRadians(30D),20D,400D,new Position(10D,10D));
     Station station1 = new Station("France",new Position(90D,180D),18000D,5);
+    private void addStation(Station s){
+        server.controlTower.addStation(s);
+        modelScene.spawnStation(s);
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        controlTower.addStation(new Station("xD",new Position(0D,0D),100D,10));
+        server.controlTower.addStation(new Station("alger",new Position(0D,0D),100D,10));
 //        controlTower.addStation(new Station("xD",new Position(0D,0D),100D,10));
 //        controlTower.addStation(new Station("xD",new Position(0D,0D),100D,10));
-        controlTower.addStation(new Station("xD",new Position(0D,0D),100D,10));
+        server.controlTower.addStation(new Station("pARIS",new Position(3D,3D),100D,10));
         contentList.setCellFactory(s->new StationComponentController());
         try {
             Naming.rebind("rmi://localhost:1099/MyServer", server);
@@ -208,11 +211,11 @@ public class HelloController implements Initializable{
     public void SelectedOptionStations(){
         addElement.setCancelButton(true);
         addElement.setVisible(true);
-        for (Station s:controlTower.getAllStations().values()) {
+        for (Station s:server.controlTower.getAllStations().values()) {
             System.out.println(s.getNameStation());
         }
 
-        contentList.setItems(FXCollections.observableArrayList(controlTower.getAllStations().values()));
+        contentList.setItems(FXCollections.observableArrayList(server.controlTower.getAllStations().values()));
         contentList.setVisible(true);
 //        tableView.setVisible(false);
 //        tableFlights.setVisible(false);
@@ -236,23 +239,24 @@ public class HelloController implements Initializable{
             fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("formStation.fxml"));
             p=fxmlLoader.load();
             FormStationController c = fxmlLoader.getController();
-            c.setControlTower(controlTower);
+            c.setControlTower(server.controlTower);
 
         }
         if(toggleFlight.isSelected()){
             fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("FormFlights.fxml"));
             p=fxmlLoader.load();
             FormFlightController c = fxmlLoader.getController();
+            c.setModelScene(modelScene);
             c.setServer(server);
-            c.setControlTower(controlTower);
+            c.setControlTower(server.controlTower);
         }
         if (togglePlane.isSelected()){
             fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("FormPlane.fxml"));
             p=fxmlLoader.load();
 
             FormPlaneController c = fxmlLoader.getController();
-            c.setStations(new ArrayList<Station>(controlTower.getAllStations().values()));
-            c.setControlTower(controlTower);
+            c.setStations(new ArrayList<Station>(server.controlTower.getAllStations().values()));
+            c.setControlTower(server.controlTower);
         }
 
         Scene scene = new Scene(p, 600, 400);
@@ -271,6 +275,7 @@ public class HelloController implements Initializable{
 
     void InitSubScene(){
         modelScene= new ModelScene(earthScene);
+        server.setModelScene(modelScene);
     }
 
 

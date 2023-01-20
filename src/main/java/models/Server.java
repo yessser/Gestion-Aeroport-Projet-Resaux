@@ -1,5 +1,9 @@
 package models;
 
+import com.example.earth3dtest.ModelScene;
+import javafx.scene.Group;
+import javafx.scene.transform.Rotate;
+
 import java.rmi.*;
 import java.rmi.server.*;
 import java.util.*;
@@ -9,9 +13,12 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
     private ExecutorService threadPool;
     private Map<Plane, Thread> threadMap;
     private Map<UUID, Object> lockMap = new HashMap<>();
-
+    private ModelScene modelScene;
     private Object lock;
-    private ControlTower controlTower;
+    public ControlTower controlTower = new ControlTower();
+    public void setModelScene(ModelScene modelScene) {
+        this.modelScene = modelScene;
+    }
     public Server() throws RemoteException {
         super();
         threadPool = Executors.newCachedThreadPool();
@@ -30,8 +37,9 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
     public void updateStation(Station station)throws RemoteException{
         controlTower.getAllStations().put(station.getIdStation(),station);
     }
-    public Collection<Station> getAllStations() throws RemoteException{
-        return controlTower.getAllStations().values();
+    public ArrayList<Station> getAllStations() throws RemoteException{
+        System.out.println(controlTower.getAllStations().values());
+        return new ArrayList<Station>(controlTower.getAllStations().values());
     }
     public void bindClientPlane(Plane obj) throws RemoteException {
         threadPool.execute(() -> {
@@ -40,6 +48,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
             threadMap.put(obj, currentThread);
             Object lockC = new Object();
             lockMap.put(obj.getIdPlane(), lockC);
+            controlTower.addPlane(obj);
             System.out.println("Received object: " + obj);
 
             //* test
@@ -87,9 +96,17 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
     }
 
     @Override
-    public void sendPosition(Position position) throws RemoteException {
+    public void sendPosition(Plane plane) throws RemoteException {
         //TODO add rotation and location for plane GUI
-        System.out.println(position.positionLon + position.positionLon);
+        System.out.println("sending position of"+plane.getIdPlane());
+        System.out.println(modelScene.planeToModel.keySet());
+        System.out.println(controlTower.getAllPlanes().keySet());
+        controlTower.getAllPlanes().put(plane.getIdPlane(),plane);
+        Group p = modelScene.planeToModel.get(plane.getIdPlane());
+        p.getTransforms().set(0,new Rotate(-plane.getPosition().positionlat,Rotate.X_AXIS));
+        p.getTransforms().set(1,new Rotate(-plane.getPosition().positionLon,Rotate.Y_AXIS));
+
+//        System.out.println(position.positionLon + position.positionLon);
     }
 
     public Flight waitForFlight(UUID id) throws RemoteException {

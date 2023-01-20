@@ -56,6 +56,7 @@ public class FormPlaneController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         client.connect();
+        System.out.println(client.getStations());
         StationsChoice.setItems(FXCollections.observableArrayList(client.getStations()));
         RotationSpeed.textProperty().addListener(new ChangeListener<String>() {
             @Override

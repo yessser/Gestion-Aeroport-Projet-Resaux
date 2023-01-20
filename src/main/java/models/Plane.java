@@ -131,8 +131,8 @@ public class Plane implements Serializable {
 
                 Double t;
                 System.out.println("STARTING THREAD");
-
-                while(position.distance(newPos)>speed*6372.8){
+                speed=speed/7200;
+                while(position.distance(newPos)>speed){
                     System.out.println(position.distance(newPos));
                     System.out.println(speed*6372.8);
                     Thread.sleep(500);
@@ -162,7 +162,7 @@ public class Plane implements Serializable {
                     // TODO add call for client to get the new pos
 
                     try {
-                        server.sendPosition(position);
+                        server.sendPosition(this);
                     } catch (RemoteException e) {
                         throw new RuntimeException(e);
                     }
@@ -174,7 +174,8 @@ public class Plane implements Serializable {
                 System.out.println("POOOOOOOOOOOP");
                 position=newPos;
                  try {
-                     server.sendPosition(position);
+                     System.out.println(this);
+                     server.sendPosition(this);
                  } catch (RemoteException e) {
                      throw new RuntimeException(e);
                  }

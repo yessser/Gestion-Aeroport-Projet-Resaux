@@ -49,11 +49,9 @@ public class ControlTower implements Serializable {
 
 
     public Flight searchFlightByPlaneID(UUID id) {
-
-        for (int i = 1; i < allFlights.size(); i++) {
-
-            if (allFlights.get(i).plane.getIdPlane().compareTo(id) == 0) {
-                return allFlights.get(i);
+        for (Flight f : allFlights.values()) {
+            if (f.plane.getIdPlane().compareTo(id)==0){
+                return f;
             }
         }
 

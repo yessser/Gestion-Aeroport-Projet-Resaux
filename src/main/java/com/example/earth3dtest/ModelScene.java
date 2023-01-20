@@ -28,13 +28,14 @@ import models.Station;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.UUID;
 
 public class ModelScene  {
 
     Rotate stationx;
     Rotate stationy;
-    HashMap<Station,Group> stationToModel=new HashMap<>();
-    HashMap<Plane,Group> planeToModel=new HashMap<>();
+    public HashMap<UUID,Group> stationToModel=new HashMap<>();
+    public HashMap<UUID,Group> planeToModel=new HashMap<>();
     AnimationTimer timer = new AnimationTimer() {
         long last=0;
         final long second=1000000000;
@@ -141,7 +142,8 @@ public class ModelScene  {
 
     public void spawnPlane(Plane p){
         Group plane =  loadModel(getClass().getResource("/plane/airplane.obj"));
-        planeToModel.put(p,plane);
+        System.out.println("spawning"+p.getIdPlane());
+        planeToModel.put(p.getIdPlane(),plane);
         Rotate lat;
         Rotate lon;
         plane.getTransforms().addAll(lat=new Rotate(-p.getPosition().positionlat, Rotate.X_AXIS),
@@ -160,7 +162,7 @@ public class ModelScene  {
     public void spawnStation(Station s) {
 //        TODO:LOAD STATION MODEL HERE with all the parameters
         Group station = loadModel(getClass().getResource("/station/station.obj"));
-        stationToModel.put(s,station);
+        stationToModel.put(s.getIdStation(),station);
 //        TODO fix translation to lat and lon
 //        Double lat = -1*Math.atan2(t.getY()*-1,Math.sqrt(Math.pow(t.getZ()*-1,2)+Math.pow(t.getX(),2)));
 //        Double lon = -1*Math.atan2(t.getX(),t.getZ()*-1);
