@@ -28,7 +28,9 @@ public class Plane implements Serializable {
         this.idPlane = UUID.randomUUID();
 
         this.reservoirMax = reservoirMax;
-        this.speed = speed;
+//        this to make movment from km/h to angular speed on earth
+//        and also devide by 7200 to go to km/0,5 second (our client updates)
+        this.speed = speed/(7200*6372.8);
         this.rotationSpeed = rotationSpeed;
         this.sizePlane = sizePlane;
         this.dangerZoneSize = dangerZoneSize;
@@ -128,13 +130,10 @@ public class Plane implements Serializable {
          currentRotation=this.position.calculateRotation(newPos);
 
 
-
-                Double t;
-                System.out.println("STARTING THREAD");
-                speed=speed/7200;
+         System.out.println("STARTING THREAD");
                 while(position.distance(newPos)>speed){
+//                    todo ask server for nearby planes
                     System.out.println(position.distance(newPos));
-                    System.out.println(speed*6372.8);
                     Thread.sleep(500);
 //                    no planes near continue to destination
                     if(dangerZonePlanes.isEmpty()){
@@ -159,8 +158,6 @@ public class Plane implements Serializable {
                                 position = nextPosLeft();
                             }
                     }
-                    // TODO add call for client to get the new pos
-
                     try {
                         server.sendPosition(this);
                     } catch (RemoteException e) {

@@ -105,6 +105,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
         Group p = modelScene.planeToModel.get(plane.getIdPlane());
         p.getTransforms().set(0,new Rotate(-plane.getPosition().positionlat,Rotate.X_AXIS));
         p.getTransforms().set(1,new Rotate(-plane.getPosition().positionLon,Rotate.Y_AXIS));
+        p.getTransforms().set(4,new Rotate(180+Math.toDegrees(plane.getCurrentRotation()),Rotate.Y_AXIS));
 
 //        System.out.println(position.positionLon + position.positionLon);
     }
