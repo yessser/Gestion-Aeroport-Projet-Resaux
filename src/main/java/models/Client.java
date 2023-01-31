@@ -56,6 +56,8 @@ public class Client {
                 }
                 currentFlight.destinationStation().addPlane(plane);
                 updateStation(currentFlight.destinationStation());
+                server.despawnPlane(p.getIdPlane());
+
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             } catch (InterruptedException e) {
@@ -100,7 +102,6 @@ public class Client {
                     p1.moveTo(currentFlight.visitedStations.get(i).getPosition(), server);
 
                 }
-
             }
 
 

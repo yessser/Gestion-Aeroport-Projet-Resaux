@@ -155,7 +155,9 @@ public class ModelScene  {
 
         model.getChildren().add(plane);
     }
-    public void  removePlane(Plane p){
+    public void  removePlane(UUID p){
+        System.out.println("despawning plane"+p);
+        System.out.println(planeToModel);
         model.getChildren().remove(planeToModel.get(p));
         planeToModel.remove(p);
     }

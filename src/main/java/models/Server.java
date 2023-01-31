@@ -110,6 +110,11 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
 //        System.out.println(position.positionLon + position.positionLon);
     }
 
+    @Override
+    public void despawnPlane(UUID idPlane) throws  RemoteException {
+        modelScene.removePlane(idPlane);
+    }
+
     public Flight waitForFlight(UUID id) throws RemoteException {
 
         Object locky = lockMap.get(id);

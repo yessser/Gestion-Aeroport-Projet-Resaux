@@ -14,4 +14,6 @@ public interface ServerInterface extends Remote {
     public void startFlight(UUID id) throws RemoteException;
     public Flight getFlight() throws RemoteException;
     public void sendPosition(Plane plane) throws RemoteException;
+
+    void despawnPlane(UUID idPlane) throws  RemoteException;
 }

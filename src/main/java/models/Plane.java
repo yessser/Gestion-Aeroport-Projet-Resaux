@@ -131,7 +131,7 @@ public class Plane implements Serializable {
 
 
          System.out.println("STARTING THREAD");
-                while(position.distance(newPos)>speed){
+                while(position.distance(newPos)>speed*6372.8){
 //                    todo ask server for nearby planes
                     System.out.println(position.distance(newPos));
                     Thread.sleep(500);
