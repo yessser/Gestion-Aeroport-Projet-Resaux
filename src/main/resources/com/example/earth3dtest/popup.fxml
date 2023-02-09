@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="110.0" prefWidth="180.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.earth3dtest.popUpController">
+   <children>
+      <Text layoutX="63.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP address" />
+      <TextField fx:id="IPadr" layoutX="31.0" layoutY="43.0" prefHeight="25.0" prefWidth="120.0" />
+      <Button fx:id="okIP" layoutX="74.0" layoutY="74.0" mnemonicParsing="false" onAction="#sendIP" text="OK" />
+   </children>
+</AnchorPane>

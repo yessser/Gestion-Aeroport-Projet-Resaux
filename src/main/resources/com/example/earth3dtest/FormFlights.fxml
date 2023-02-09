@@ -37,20 +37,6 @@
       </HBox>
       <VBox layoutX="14.0" layoutY="80.0" prefHeight="120.0" prefWidth="510.0" spacing="20.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="45.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="AIRplane">
-                     <styleClass>
-                        <String fx:value="textGeneral" />
-                        <String fx:value="text-labels" />
-                     </styleClass>
-                     <HBox.margin>
-                        <Insets left="35.0" top="2.0" />
-                     </HBox.margin>
-                  </Text>
-                  <ChoiceBox id="planeBox" fx:id="airplaneChoice" prefHeight="25.0" prefWidth="345.0" />
-               </children>
-            </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Station">
@@ -62,12 +48,26 @@
                         <Insets left="40.0" right="12.0" top="2.0" />
                      </HBox.margin>
                   </Text>
-                  <ChoiceBox id="planeBox" fx:id="StationChoice" prefHeight="25.0" prefWidth="345.0" />
+                  <ChoiceBox fx:id="StationChoice" prefHeight="25.0" prefWidth="345.0" styleClass="planeBox" />
                   <Button id="btnStation" mnemonicParsing="false" onAction="#addStation">
                      <graphic>
                         <FontAwesomeIconView fill="#1b1b1b" glyphName="PLUS" size="14" />
                      </graphic>
                   </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="45.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="AIRplane">
+                     <styleClass>
+                        <String fx:value="textGeneral" />
+                        <String fx:value="text-labels" />
+                     </styleClass>
+                     <HBox.margin>
+                        <Insets left="35.0" top="2.0" />
+                     </HBox.margin>
+                  </Text>
+                  <ChoiceBox id="planeBox" fx:id="airplaneChoice" prefHeight="25.0" prefWidth="345.0" styleClass="planeBox" />
                </children>
             </HBox>
          </children>

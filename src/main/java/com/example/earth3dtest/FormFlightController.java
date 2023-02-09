@@ -43,7 +43,7 @@ public class FormFlightController implements Initializable {
                 && !visitedStation.contains(StationChoice.getValue())){
             visitedStation.add(StationChoice.getValue());
             Text t= new Text(StationChoice.getValue().getNameStation());
-            t.getStyleClass().add("textPath");
+            t.setStyle("fx-fill: #eeeeee;");
             t.setWrappingWidth(350);
             path.getChildren().add(t);
         }

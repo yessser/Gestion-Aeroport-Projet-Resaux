@@ -5,14 +5,19 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import models.*;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -35,6 +40,10 @@ public class FormPlaneController implements Initializable {
     @FXML
     private TextField speed;
 
+    @FXML
+    private TextField IPadress;
+
+    public String Ipadr;
 
     @FXML
     void addPlane(ActionEvent event) {
@@ -53,11 +62,20 @@ public class FormPlaneController implements Initializable {
 
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        client.connect();
+
+    @FXML
+    public void connectIP() {
+        client.connect(IPadress.getText());
         System.out.println(client.getStations());
         StationsChoice.setItems(FXCollections.observableArrayList(client.getStations()));
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+
+
+
         RotationSpeed.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue,
