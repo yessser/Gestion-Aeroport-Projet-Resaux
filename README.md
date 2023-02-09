@@ -1,0 +1,35 @@
+# Multiclient App for Tracking Flights
+
+A Java and JavaFX based application that provides real-time tracking of flights and their corresponding planes and stations.
+
+
+## Screenshots
+
+Server Side
+
+![Server Screenshot](https://github.com/yessser/Gestion-Aeroport-Projet-Resaux/blob/master/repoIMGs/Server-Side-Main.png)
+
+Client Side
+
+![Client Screenshot](https://github.com/yessser/Gestion-Aeroport-Projet-Resaux/blob/master/repoIMGs/Client-Side.png)
+
+
+## Features
+
+- Real-time tracking of flights, planes and stations
+- CRUD functionalities for stations, flights, and planes
+- RMI communication between clients and the server
+- Representation of the server as a global control tower with access to all available stations, flights and planes
+- Representation of clients as plane
+
+
+## Requirements
+
+- Java 8 or above
+- JavaFX
+- RMI
+## Getting Started
+
+1. Start the RMI registry by using the command `start rmiregistry` in the terminal
+2. Run the MainApp to start the server
+3. Start the clients by running the ClientApplication
