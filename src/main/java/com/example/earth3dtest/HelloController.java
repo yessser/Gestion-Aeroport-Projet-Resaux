@@ -79,10 +79,28 @@ public class HelloController implements Initializable{
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        server.controlTower.addStation(new Station("alger",new Position(0D,0D),100D,10));
-//        controlTower.addStation(new Station("xD",new Position(0D,0D),100D,10));
-//        controlTower.addStation(new Station("xD",new Position(0D,0D),100D,10));
-        server.controlTower.addStation(new Station("pARIS",new Position(3D,3D),100D,10));
+        InitSubScene();
+
+
+        // Pre added Stations
+        Station alg = new Station("Algiers",new Position(36.75D,3.05D),100D,10);
+        server.controlTower.addStation(alg);
+        modelScene.spawnStation(alg);
+        Station fra = new Station("France",new Position(48.85D,2.35D),100D,10);
+        server.controlTower.addStation(fra);
+        modelScene.spawnStation(fra);
+        Station uae = new Station("Dubai",new Position( 25.033101999D, 55.37168350D),100D,10);
+        server.controlTower.addStation(uae);
+        modelScene.spawnStation(uae);
+        Station russ = new Station("Moscow",new Position( 55.8869D, 37.6738D),100D,10);
+        server.controlTower.addStation(russ);
+        modelScene.spawnStation(russ);
+        Station egp = new Station("Cairo",new Position( 30.1672D, 31.3676D),100D,10);
+        server.controlTower.addStation(egp);
+        modelScene.spawnStation(egp);
+
+
+
         contentList.setCellFactory(s->new StationComponentController());
         try {
             Naming.rebind("rmi://localhost:1099/MyServer", server);
@@ -93,72 +111,7 @@ public class HelloController implements Initializable{
             throw new RuntimeException(e);
         }
 
-        /*
-        /*
-        /*
-        /*
-        planes.add(p1);
-        planes.add(p2);
-        Stations.add(station1);
-        System.out.println(p1.getIdPlane());
-
-        PlaneId.setCellValueFactory(new PropertyValueFactory<>("PlaneId"));
-        Lat.setCellValueFactory(new PropertyValueFactory<>("Lat"));
-        Lon.setCellValueFactory(new PropertyValueFactory<>("Lon"));
-        for (Plane pl:planes){
-            int i=0;
-            Double positionlat=0D,positionLon=0D;
-            String regex="([0-9]+[.][0-9]+)";
-            String input= pl.getPosition().toString();
-
-            Pattern pattern=Pattern.compile(regex);
-            Matcher matcher=pattern.matcher(input);
-
-            while(matcher.find()) {
-                if (i==0)
-                    positionlat = Double.parseDouble(matcher.group(1));
-                else
-                    positionLon = Double.parseDouble(matcher.group(1));
-                i++;
-            }
-            planeData.add(new PlaneData(pl.getIdPlane().toString(),positionlat,positionLon));
-        }
-        tableView.setItems(planeData);
-
-
-        StationName.setCellValueFactory(new PropertyValueFactory<>("StationName"));
-        StationLat.setCellValueFactory(new PropertyValueFactory<>("StationLat"));
-        StationLon.setCellValueFactory(new PropertyValueFactory<>("StationLon"));
-        for (Station st:Stations){
-            int i=0;
-            Double positionlat=0D,positionLon=0D;
-            String regex="([0-9]+[.][0-9]+)";
-            String input= st.getPosition().toString();
-
-            Pattern pattern=Pattern.compile(regex);
-            Matcher matcher=pattern.matcher(input);
-
-            while(matcher.find()) {
-                if (i==0)
-                    positionlat = Double.parseDouble(matcher.group(1));
-                else
-                    positionLon = Double.parseDouble(matcher.group(1));
-                i++;
-            }
-            StationDat.add(new StationDat(st.getNameStation(),positionlat,positionLon));
-        }
-        tableStations.setItems(StationDat);
-
-        FlightId.setCellValueFactory(new PropertyValueFactory<>("FlightId"));
-        StartStation.setCellValueFactory(new PropertyValueFactory<>("StartStation"));
-        DestinationStation.setCellValueFactory(new PropertyValueFactory<>("DestinationStation"));
-        for (Flight fl:flights){
-
-            FlightData.add(new FlightData(fl.getIdFlight().toString(),fl.startStation().getNameStation(),fl.destinationStation().getNameStation()));
-        }
-        tableFlights.setItems(FlightData);
-*/
-        InitSubScene();
+        SelectedOptionStations();
 
     }
 
@@ -240,6 +193,7 @@ public class HelloController implements Initializable{
             p=fxmlLoader.load();
             FormStationController c = fxmlLoader.getController();
             c.setControlTower(server.controlTower);
+            c.modelScene=modelScene;
 
         }
         if(toggleFlight.isSelected()){

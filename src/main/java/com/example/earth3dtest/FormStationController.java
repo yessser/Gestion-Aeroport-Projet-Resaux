@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 
 public class FormStationController implements Initializable {
     ControlTower controlTower;
+    ModelScene modelScene;
     public  void setControlTower(ControlTower c){
         this.controlTower=c;
     }
@@ -37,8 +38,10 @@ public class FormStationController implements Initializable {
 
     @FXML
     void addStation(ActionEvent event) {
-            controlTower.addStation(new Station(name.getText(),new Position(Double.valueOf(lat.getText()),Double.valueOf(lon.getText())),
-                    Double.valueOf(fuel.getText()),Integer.parseInt(capacity.getText())));
+        Station s= new Station(name.getText(),new Position(Double.valueOf(lat.getText()),Double.valueOf(lon.getText())),
+                Double.valueOf(fuel.getText()),Integer.parseInt(capacity.getText()));
+            controlTower.addStation(s);
+            modelScene.spawnStation(s);
         Stage stage=(Stage) name.getScene().getWindow();
         stage.close();
     }

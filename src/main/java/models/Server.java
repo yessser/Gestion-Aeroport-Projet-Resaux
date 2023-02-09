@@ -1,6 +1,7 @@
 package models;
 
 import com.example.earth3dtest.ModelScene;
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.transform.Rotate;
 
@@ -112,7 +113,8 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
 
     @Override
     public void despawnPlane(UUID idPlane) throws  RemoteException {
-        modelScene.removePlane(idPlane);
+        Platform.runLater(() -> modelScene.removePlane(idPlane));
+
     }
 
     public Flight waitForFlight(UUID id) throws RemoteException {
