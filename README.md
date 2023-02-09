@@ -1,6 +1,6 @@
 # Multiclient App for Tracking Flights
 
-A Java and JavaFX based application that provides real-time tracking of flights and their corresponding planes and stations.
+A Java and JavaFX based application that provides a simulation of real-time tracking of flights and their corresponding planes and stations.
 
 
 ## Screenshots
