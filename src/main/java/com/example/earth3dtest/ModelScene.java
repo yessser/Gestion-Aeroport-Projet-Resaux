@@ -168,8 +168,12 @@ public class ModelScene  {
 //        TODO fix translation to lat and lon
 //        Double lat = -1*Math.atan2(t.getY()*-1,Math.sqrt(Math.pow(t.getZ()*-1,2)+Math.pow(t.getX(),2)));
 //        Double lon = -1*Math.atan2(t.getX(),t.getZ()*-1);
-        station.getTransforms().addAll(new Rotate(Math.toDegrees(s.getPosition().positionlat), Rotate.X_AXIS),new Rotate(s.getPosition().positionLon, Rotate.Y_AXIS));
-        station.getTransforms().add(new Translate(0,0,-1.001));
+        station.getTransforms().addAll(new Rotate(-s.getPosition().positionlat, Rotate.X_AXIS),
+                                    new Rotate(-s.getPosition().positionLon, Rotate.Y_AXIS));
+        station.getTransforms().add(new Translate(0,0,-0.98));
+        station.getTransforms().add(new Rotate(70,Rotate.X_AXIS));
+//        station.getTransforms().add(new Rotate(180,Rotate.Y_AXIS));
+        station.getTransforms().add(new Rotate(0,Rotate.Z_AXIS));
         model.getChildren().add(station);
     }
     public void removeStation(Station s){

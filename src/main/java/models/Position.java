@@ -26,12 +26,12 @@ public class Position implements Serializable {
 
 
     public Position(Double positionlat, Double positionLon) {
-        if(positionLon>180||positionLon<=-180){
+      /*  if(positionLon>180||positionLon<=-180){
             positionLon=-1*positionLon%180;
         }
         if(positionlat>90||positionlat<=-90){
             positionlat=-1*positionlat%90;
-        }
+        }*/
         this.positionlat = positionlat;
         this.positionLon = positionLon;
     }
