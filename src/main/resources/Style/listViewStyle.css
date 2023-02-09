@@ -1,0 +1,55 @@
+@font-face {
+    src: url("../fonts/MBFSpace.ttf");
+}
+
+#cellPane {
+-fx-background-color: transparent;
+}
+
+#cellPane:focused {
+-fx-background-color: transparent;
+}
+
+.cell {
+
+-fx-background-color: transparent;
+-fx-text-fill: #eeeeee;
+-fx-border-radius: 10px;
+-fx-background-radius: 10px 0px 10px 0px;
+-fx-border-color: #1b1b1b;
+-fx-font-size: 14px;
+-fx-font-family: "MBF Space";
+-fx-border-width: 0 0 2 0;
+-fx-background-insets: 0;
+}
+
+.cell:hover {
+-fx-border-color: linear-gradient(to top,  #1b1b1b,  #323232);
+-fx-background-color: linear-gradient(to top,  #1b1b1b,  #323232);
+-fx-text-fill:  #eeeeee;
+-fx-border-color: #323232;
+-fx-background-radius: 10px 0px 10px 0px;
+-fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.3), 10, 0, 0, 0);
+-fx-cursor: hand;
+-fx-border-width: 0 0 2 0;
+}
+
+#trash {
+-fx-background-color: #eeeeee;
+-fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 4,0,0,1 );
+-fx-background-radius: 30px;
+-fx-padding: 8px 10px;
+}
+
+#trash:hover {
+    -fx-background-color: white;
+    -fx-effect: dropshadow( gaussian , #eeeeee, 10,0,0,1 );
+}
+
+#trash:pressed {
+-fx-background-color: #758F8F;
+}
+
+.mytext {
+-fx-fill: #eeeeee;
+}

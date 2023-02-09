@@ -56,17 +56,19 @@
 -fx-background-color: #758F8F;
 }
 
-#planeBox {
+.planeBox {
+ -fx-text-fill:  #eeeeee;
 -fx-background-color: transparent;
 -fx-border-color: linear-gradient(to left,  #1b1b1b, #282828,  #eeeeee);
 -fx-border-width: 0 0 2 0;
 -fx-border-radius: 0 0 2 0;
 }
 
-#planeBox:hover {
+.planeBox:hover {
+    -fx-text-fill: #eeeeee;
    -fx-border-color: #eeeeee;
-   -fx-border-width: 2 ;
-   -fx-border-radius: 2 ;
+   -fx-border-width: 2;
+   -fx-border-radius: 2;
    -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.3), 2, 0, 0, 0);
 }
 
@@ -96,6 +98,5 @@
 .listPane {
 -fx-border-color: transparent;
 -fx-background-color:  #1b1b1b;
-
 
 }

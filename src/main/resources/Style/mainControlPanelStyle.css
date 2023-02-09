@@ -34,18 +34,8 @@
 }
 
 
-#trash {
--fx-background-color: #eeeeee;
--fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 4,0,0,1 );
--fx-background-radius: 30px;
--fx-padding: 8px 10px;
-}
 
-#trash:hover {
-    -fx-background-color: white;
-    -fx-effect: dropshadow( gaussian , #eeeeee, 10,0,0,1 );
-}
 
-#trash:pressed {
--fx-background-color: #758F8F;
+#listView {
+    -fx-background-color: #1b1b1b;
 }
