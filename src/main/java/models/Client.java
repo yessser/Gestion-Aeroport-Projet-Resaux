@@ -19,16 +19,17 @@ public class Client {
             throw new RuntimeException(e);
         }
     }
-    public boolean connect(){
+    public boolean connect(String IP){
 
         try {
 
-            server = (ServerInterface) Naming.lookup("rmi://localhost:1099/MyServer");
+            server = (ServerInterface) Naming.lookup("rmi://"+IP+":1099/MyServer");
             System.out.println("haloo");
             System.out.println(server.getAllStations());
             stations=server.getAllStations();
             return true;
         } catch (NotBoundException | RemoteException | MalformedURLException ignored) {
+            System.out.println("ERR con");
             return false;
         }
     }
