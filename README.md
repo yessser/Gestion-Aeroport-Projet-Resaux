@@ -7,11 +7,11 @@ A Java and JavaFX based application that provides a simulation of real-time trac
 
 Server Side
 
-![Server Screenshot](https://github.com/yessser/Gestion-Aeroport-Projet-Resaux/blob/master/repoIMGs/Server-Side-Main.png)
+![Server Screenshot](repoIMGs/Server-Side-Main.png)
 
 Client Side
 
-![Client Screenshot](https://github.com/yessser/Gestion-Aeroport-Projet-Resaux/blob/master/repoIMGs/Client-Side.png)
+![Client Screenshot](repoIMGs/Client-Side.png)
 
 
 ## Features
